@@ -1,0 +1,136 @@
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+.modal_opened {
+  visibility: visible;
+}
+.modal__content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 28px 28px 36px 28px;
+  background-color: white;
+  border-style: none;
+  border-radius: 10px;
+  max-width: 496px;
+  width: 100%;
+}
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background-image: url(../../assets/Union.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 16px;
+  height: 16px;
+  border-style: none;
+  background-color: transparent;
+  padding: 0;
+}
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.modal__title {
+  margin: 0;
+  padding: 0;
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 1);
+  padding-bottom: 24px;
+}
+.modal__label {
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(0, 0, 0, 1);
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.modal__input {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  border-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+  /* display: block;
+  padding: 0; */
+  padding: 0;
+  padding-top: 8px;
+}
+.modal__radio-fieldset {
+  border-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+.modal__legend {
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 1);
+  padding-bottom: 12px;
+}
+.modal__input_type_radio {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  border-style: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
+  padding-top: 8px;
+}
+.modal__radio-label {
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: row;
+  gap: 11px;
+  padding-bottom: 8px;
+}
+
+.modal__save {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-style: none;
+  border-radius: 5px;
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  color: white;
+  padding: 8px 16px;
+  width: 124px;
+}

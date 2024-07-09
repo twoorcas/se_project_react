@@ -1,0 +1,22 @@
+.cards {
+  padding-top: 40px;
+}
+.cards__text {
+  margin: 0;
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.cards__list {
+  list-style: none;
+  margin: 0 auto;
+  padding-top: 34px;
+  padding-left: 0;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fit, 323px);
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
