@@ -48,6 +48,21 @@
 @media screen and (max-width: 770px) {
   .header {
     max-width: 343px;
-    padding: 18px 0 16px 16px;
+    padding: 18px 16px 16px 16px;
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  .header__logo {
+    padding-left: 0;
+  }
+  .header___date-location {
+    padding-left: 0;
+  }
+  .header__add-clothes-btn {
+    display: none;
+  }
+  .header__user-container {
+    display: none;
   }
 }

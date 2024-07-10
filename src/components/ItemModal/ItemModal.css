@@ -1,15 +1,5 @@
-.modal__close {
+.modal__close_content_type_image {
   background-image: url(../../assets/whiteClose.svg);
-  /* position: absolute;
-  top: 20px;
-  right: 28px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: 16px;
-  height: 16px;
-  border-style: none;
-  background-color: transparent;
-  padding: 0; */
 }
 .modal__content_type_image {
   position: relative;
@@ -52,4 +42,9 @@
   font-style: normal;
   font-weight: 700;
   line-height: 1;
+}
+@media screen and (max-width: 770px) {
+  .modal__content_type_image {
+    max-width: 343px;
+  }
 }

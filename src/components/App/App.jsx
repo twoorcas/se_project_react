@@ -8,14 +8,6 @@ import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinate, apiKey } from "../../utils/constant";
 function App() {
-  useEffect(() => {
-    getWeather(coordinate, apiKey)
-      .then((data) => {
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
-  }, []);
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -33,7 +25,14 @@ function App() {
     setSelectedCard(card);
     setActiveModal("preview-card");
   };
-
+  useEffect(() => {
+    getWeather(coordinate, apiKey)
+      .then((data) => {
+        const filteredData = filterWeatherData(data);
+        setWeatherData(filteredData);
+      })
+      .catch(console.error);
+  }, []);
   return (
     <div className="page">
       <div className="page__content">
@@ -44,8 +43,8 @@ function App() {
       <ModalWithForm
         buttonText="Add garment"
         titleText="New garment"
-        activeModal={activeModal}
         onClose={closeActiveModal}
+        isOpen={activeModal === "add-clothes-modal"}
       >
         <label htmlFor="name" className="modal__label">
           Name{" "}
@@ -70,7 +69,12 @@ function App() {
         <fieldset className="modal__radio-fieldset">
           <legend className="modal__legend">Select the weather type:</legend>
           <label htmlFor="hot" className=" modal__radio-label">
-            <input type="radio" className=" modal__input_type_radio" id="hot" />
+            <input
+              type="radio"
+              className=" modal__input_type_radio"
+              id="hot"
+              name="weather-type"
+            />
             Hot{" "}
           </label>
           <label htmlFor="warm" className="modal__radio-label">
@@ -78,6 +82,7 @@ function App() {
               type="radio"
               className=" modal__input_type_radio"
               id="warm"
+              name="weather-type"
             />
             Warm
           </label>
@@ -86,6 +91,7 @@ function App() {
               type="radio"
               className=" modal__input_type_radio"
               id="cold"
+              name="weather-type"
             />
             Cold
           </label>
