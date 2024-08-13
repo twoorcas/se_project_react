@@ -2,6 +2,9 @@
   display: flex;
   align-items: start;
   padding-top: 19px;
+  flex-wrap: wrap;
+  flex-direction: row;
+  max-width: 1360px;
 }
 .profile__side-bar {
   display: flex;
@@ -9,27 +12,12 @@
   align-items: center;
   padding-right: 40px;
 }
-.profile__texts {
-  margin: 0;
-  font-family: Cabinet Grotesk;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 1.2;
-  color: rgba(0, 0, 0, 1);
-  display: flex;
-  gap: 20px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
-.profile__text {
-  margin: 0;
-}
 .profile__add-button {
   margin: 0;
   color: rgba(0, 0, 0, 0.6);
   padding: 0;
 }
 .profile__clothes-section {
-  /* display: flex; */
+  /* display: flex;
+  flex-direction: column; */
 }

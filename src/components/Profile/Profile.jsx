@@ -2,7 +2,13 @@ import "./Profile.css";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import avatar from "../../assets/avatar.png";
-function Profile({ avatar, username, handleCardClick, clothingItems }) {
+function Profile({
+  avatar,
+  username,
+  handleCardClick,
+  clothingItems,
+  handleAddClick,
+}) {
   return (
     <div className="profile">
       <section className="profile__side-bar">
@@ -13,6 +19,7 @@ function Profile({ avatar, username, handleCardClick, clothingItems }) {
         <ClothesSection
           handleCardClick={handleCardClick}
           clothingItems={clothingItems}
+          handleAddClick={handleAddClick}
         />
       </section>
     </div>
