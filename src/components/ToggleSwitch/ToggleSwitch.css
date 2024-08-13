@@ -1,0 +1,53 @@
+.switch {
+  display: flex;
+  font-family: Cabinet Grotesk;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.switch__box {
+  height: 28px;
+  width: 56px;
+  border-radius: 20px;
+  border: 2px rgba(126, 126, 126, 1) solid;
+  appearance: none;
+}
+
+.switch__slider {
+  height: 28px;
+  width: 28px;
+  position: absolute;
+  background: black;
+  border-radius: 20px;
+  cursor: pointer;
+  left: 1px;
+}
+
+.switch__slider-C {
+  left: 28px;
+}
+.switch__temp-unit {
+  margin: 0;
+  position: absolute;
+  color: rgba(0, 0, 0, 0.5);
+  /* font-family: Cabinet Grotesk;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center; */
+}
+.switch__temp-unit_F {
+  left: 10px;
+  bottom: 10px;
+}
+.switch__temp-unit_C {
+  right: 10px;
+  bottom: 10px;
+}
+.switch__active {
+  color: rgba(255, 255, 255, 1);
+}

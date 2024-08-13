@@ -1,0 +1,65 @@
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+.modal_opened {
+  visibility: visible;
+}
+.modal__content_type_delete-confirmation {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 60px 150px;
+  background-color: white;
+  border-style: none;
+  border-radius: 10px;
+  max-width: 496px;
+  width: 100%;
+}
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background-image: url(../../assets/Union.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 16px;
+  height: 16px;
+  border-style: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.modal__text {
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  color: rgba(0, 0, 0, 1);
+  margin: 0;
+}
+.modal__text_delete {
+  padding-top: 40px;
+  padding-bottom: 24px;
+  color: rgba(255, 77, 0, 1);
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+.modal__text_cancel {
+  cursor: pointer;
+}

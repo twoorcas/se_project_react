@@ -1,9 +1,16 @@
 import "./ItemModal.css";
-function ItemModal({ activeModal, onClose, selectedCard }) {
+function ItemModal({
+  activeModal,
+  onClose,
+  selectedCard,
+  openConfirmationModal,
+}) {
+  const selectOpenConfirmation = () => {
+    openConfirmationModal(selectedCard);
+  };
   return (
     <div
       className={`modal ${activeModal === "preview-card" && "modal_opened"}`}
-      id="preview-card"
     >
       <div className="modal__content modal__content_type_image">
         <button
@@ -12,7 +19,7 @@ function ItemModal({ activeModal, onClose, selectedCard }) {
           onClick={onClose}
         />
         <img
-          src={selectedCard.link}
+          src={selectedCard.imageUrl}
           alt={selectedCard.name}
           className="modal__image"
         />
@@ -20,6 +27,13 @@ function ItemModal({ activeModal, onClose, selectedCard }) {
           <h2 className="modal__caption">{selectedCard.name}</h2>
           <p className="modal__weather">Weather: {selectedCard.weather}</p>
         </div>
+        <button
+          type="button"
+          className="modal__delete-button"
+          onClick={selectOpenConfirmation}
+        >
+          Delete item
+        </button>
       </div>
     </div>
   );

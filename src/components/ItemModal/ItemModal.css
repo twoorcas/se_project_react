@@ -43,6 +43,22 @@
   font-weight: 700;
   line-height: 1;
 }
+.modal__delete-button {
+  position: absolute;
+  top: 518px;
+  left: 365px;
+  border-style: none;
+  background-color: transparent;
+  padding: 0;
+  color: rgba(255, 77, 0, 1);
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 770px) {
   .modal__content_type_image {
     max-width: 343px;

@@ -1,0 +1,12 @@
+.side-bar__username {
+  margin: 0;
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.side-bar__avatar {
+  height: 56px;
+  width: 56px;
+}
