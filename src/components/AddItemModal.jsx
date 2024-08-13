@@ -48,7 +48,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
           placeholder="Name"
           required
         />
-        <span class="modal__error" id="modal-name-input-error"></span>
+        <span className="modal__error" id="modal-name-input-error"></span>
       </label>
       <label htmlFor="imageURL" className="modal__label">
         image{" "}
@@ -61,7 +61,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
           placeholder="image URL"
           required
         />
-        <span class="modal__error" id="modal-url-input-error"></span>
+        <span className="modal__error" id="modal-url-input-error"></span>
       </label>
       <fieldset className="modal__radio-fieldset">
         <legend className="modal__legend">Select the weather type:</legend>

@@ -68,7 +68,7 @@
   flex-direction: column;
 }
 .modal__input {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0);
   font-family: Cabinet Grotesk;
   font-size: 16px;
   font-style: normal;
