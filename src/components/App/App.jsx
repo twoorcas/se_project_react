@@ -2,8 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import AddItemModal from "../AddItemModal";
+import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
@@ -87,8 +86,8 @@ function App() {
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
           <Routes>
             <Route
-              path="/se_project_react/"
-              // path="/"
+              // path="/se_project_react/"
+              path="/"
               element={
                 <Main
                   weatherData={weatherData}
@@ -98,8 +97,8 @@ function App() {
               }
             />
             <Route
-              path="/se_project_react/profile"
-              // path="/profile"
+              // path="/se_project_react/profile"
+              path="/profile"
               element={
                 <Profile
                   avatar={avatar}
