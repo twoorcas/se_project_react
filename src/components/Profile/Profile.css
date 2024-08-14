@@ -4,13 +4,12 @@
   padding-top: 19px;
   flex-wrap: wrap;
   flex-direction: row;
-  max-width: 1360px;
 }
 .profile__side-bar {
   display: flex;
   gap: 6px;
   align-items: center;
-  padding-right: 40px;
+  padding-right: 116px;
 }
 .profile__add-button {
   margin: 0;
@@ -18,6 +17,22 @@
   padding: 0;
 }
 .profile__clothes-section {
-  /* display: flex;
-  flex-direction: column; */
+  flex: 2;
+}
+@media screen and (max-width: 770px) and (min-width: 343px) {
+  .profile {
+    padding: 0px;
+  }
+
+  .profile__side-bar {
+    padding: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: relative;
+  }
 }

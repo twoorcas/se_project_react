@@ -10,12 +10,14 @@ function Header({ handleAddClick, weatherData }) {
   });
   return (
     <header className="header">
-      <Link to="/">
-        <img src={logo} alt="WTWR logo" className="header__logo" />
-      </Link>
-      <p className="header___date-location">
-        {currentDate}, {weatherData.city}
-      </p>
+      <div className="header__logo-date-location">
+        <Link to="/se_project_react">
+          <img src={logo} alt="WTWR logo" className="header__logo" />
+        </Link>
+        <p className="header___date-location">
+          {currentDate}, {weatherData.city}
+        </p>
+      </div>
       <div className="header__icons">
         <ToggleSwitch />
         <button
@@ -25,9 +27,12 @@ function Header({ handleAddClick, weatherData }) {
         >
           + Add clothes
         </button>
-        <Link to="/profile" className="header__link_to-profile">
+        <Link
+          to="/se_project_react/profile"
+          className="header__link_to-profile"
+        >
           <div className="header__user-container">
-            <p className="header__username">Terrence Tegegne</p>
+            <p className=" header__username">Terrence Tegegne</p>
             <img
               src={avatar}
               alt="Terrence Tegegne"

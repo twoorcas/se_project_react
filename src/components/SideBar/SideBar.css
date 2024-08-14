@@ -10,3 +10,41 @@
   height: 56px;
   width: 56px;
 }
+.side-bar__content_text {
+  display: none;
+}
+.side-bar__content_user {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+@media screen and (max-width: 770px) {
+  .side-bar__username {
+    font-size: 24px;
+  }
+  .header__user-container {
+    display: none;
+  }
+  .side-bar__content_user {
+    align-items: start;
+    padding-bottom: 44px;
+  }
+  .side-bar__content_text {
+    display: flex;
+    position: absolute;
+    top: 58px;
+    left: 76px;
+    flex-direction: column;
+  }
+  .side-bar__text {
+    font-family: Cabinet Grotesk;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+    display: block;
+    gap: 8px;
+  }
+}

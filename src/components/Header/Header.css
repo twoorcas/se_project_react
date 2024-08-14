@@ -3,6 +3,12 @@
   align-items: center;
   padding: 32px 0 28px;
   color: black;
+  justify-content: space-between;
+}
+.header__logo-date-location {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 .header__logo {
   height: 40px;
@@ -11,7 +17,6 @@
 .header___date-location {
   margin: 0;
   margin-right: auto;
-  padding-left: 24px;
   font-family: Cabinet Grotesk;
   font-size: 20px;
   font-style: normal;
@@ -56,24 +61,29 @@
   height: 40px;
   width: 40px;
 }
+
 @media screen and (max-width: 770px) {
   .header {
     max-width: 343px;
-    padding: 18px 16px 16px 16px;
+    padding-bottom: 16px;
     flex-direction: column;
     gap: 32px;
     align-items: flex-start;
+  }
+  .header__logo-date-location {
+    gap: 12px;
   }
   .header__logo {
     padding-left: 0;
   }
   .header___date-location {
     padding-left: 0;
+    padding-right: 60px;
+    margin: 0;
+    font-size: 16px;
   }
+
   .header__add-clothes-btn {
-    display: none;
-  }
-  .header__user-container {
     display: none;
   }
 }

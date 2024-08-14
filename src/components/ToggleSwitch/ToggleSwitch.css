@@ -51,3 +51,8 @@
 .switch__active {
   color: rgba(255, 255, 255, 1);
 }
+@media screen and (max-width: 770px) {
+  .switch {
+    display: none;
+  }
+}

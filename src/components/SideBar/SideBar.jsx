@@ -2,8 +2,16 @@ import "./SideBar.css";
 function SideBar({ avatar, username }) {
   return (
     <>
-      <img src={avatar} alt={username} className="side-bar__avatar" />
-      <p className="side-bar__username">{username}</p>
+      {" "}
+      <div className="side-bar__content_user">
+        <img src={avatar} alt={username} className="side-bar__avatar" />
+        <p className="side-bar__username">{username}</p>
+      </div>
+      <div className="side-bar__content_text">
+        <p className="side-bar__text">Change profile data</p>
+
+        <p className="side-bar__text">Log out</p>
+      </div>
     </>
   );
 }
