@@ -20,10 +20,10 @@ function Profile({
         toggleMobileMenu={toggleMobileMenu}
         isMobileMenuOpened={isMobileMenuOpened}
       />
-      {/* <div className="profile__user-clothes"> */}
+
       <section className="profile__side-bar">
         <SideBar avatar={avatar} username={username} />
-        <button className="profile__button"></button>
+        <button className="profile__button" onClick={toggleMobileMenu}></button>
       </section>
 
       <section className="profile__clothes-section">
@@ -34,7 +34,6 @@ function Profile({
         />
       </section>
     </div>
-    // </div>
   );
 }
 export default Profile;

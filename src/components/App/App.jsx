@@ -26,7 +26,7 @@ function App() {
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
   const [toDeleteItem, setToDeleteItem] = useState("");
-  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(true);
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
     setActiveModal("add-clothes-modal");
