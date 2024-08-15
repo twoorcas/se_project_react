@@ -1,3 +1,8 @@
+.side-bar__content_user {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
 .side-bar__username {
   margin: 0;
   font-family: Cabinet Grotesk;
@@ -13,27 +18,21 @@
 .side-bar__content_text {
   display: none;
 }
-.side-bar__content_user {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-}
+
 @media screen and (max-width: 770px) {
-  .side-bar__username {
-    font-size: 24px;
-  }
-  .header__user-container {
-    display: none;
-  }
   .side-bar__content_user {
     align-items: start;
     padding-bottom: 44px;
   }
+  .side-bar__username {
+    font-size: 24px;
+  }
+
   .side-bar__content_text {
     display: flex;
-    position: absolute;
+    /* position: absolute;
     top: 58px;
-    left: 76px;
+    left: 76px; */
     flex-direction: column;
   }
   .side-bar__text {

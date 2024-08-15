@@ -1,0 +1,81 @@
+@media screen and (max-width: 770px) {
+  .modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+  }
+  .modal_opened {
+    visibility: visible;
+  }
+  .modal__mobile-menu {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* position: absolute; */
+    /* top: 5px; */
+    z-index: 2;
+  }
+  .mobile-menu__user-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 68px;
+    position: relative;
+  }
+  .mobile-menu__username {
+    margin: 0;
+    font-family: Cabinet Grotesk;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .mobile-menu__avatar {
+    height: 40px;
+    width: 40px;
+  }
+  .mobile-menu__add-clothes-btn {
+    margin: 0;
+    border: 0;
+    font-family: Cabinet Grotesk;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    margin-right: 20px;
+  }
+  .mobile-menu__close {
+    position: absolute;
+    top: 11px;
+    left: 240px;
+    background-image: url(../../assets/Union.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 21px;
+    height: 21px;
+    border-style: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+  .mobile-menu__switch {
+    padding-bottom: 40px;
+    margin-right: 20px;
+  }
+}

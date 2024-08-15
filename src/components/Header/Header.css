@@ -69,12 +69,16 @@
     flex-direction: column;
     gap: 32px;
     align-items: flex-start;
+    width: 100%;
   }
   .header__logo-date-location {
     gap: 12px;
   }
   .header__logo {
     padding-left: 0;
+  }
+  .header__icons {
+    display: none;
   }
   .header___date-location {
     padding-left: 0;

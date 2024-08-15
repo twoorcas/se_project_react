@@ -13,6 +13,7 @@ import Profile from "../Profile/Profile";
 import avatar from "../../assets/avatar.png";
 import { getItems, addaItem, deleteItem } from "../../utils/api";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
+import MobileMenu from "../MobileMenu/MobileMenu";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -25,13 +26,16 @@ function App() {
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
   const [toDeleteItem, setToDeleteItem] = useState("");
+  const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(true);
   const handleAddClick = () => {
+    setIsMobileMenuOpened(false);
     setActiveModal("add-clothes-modal");
   };
   const closeActiveModal = () => {
     setActiveModal("");
   };
   const handleCardClick = (card) => {
+    setIsMobileMenuOpened(false);
     setSelectedCard(card);
     setActiveModal("preview-card");
   };
@@ -51,6 +55,7 @@ function App() {
   };
 
   const openConfirmationModal = (card) => {
+    setIsMobileMenuOpened(false);
     setToDeleteItem(card);
     setActiveModal("delete-confirmation");
   };
@@ -61,7 +66,12 @@ function App() {
       })
       .catch(console.error);
   };
-
+  const toggleMobileMenu = () => {
+    if (isMobileMenuOpened) {
+      return setIsMobileMenuOpened(false);
+    }
+    return setIsMobileMenuOpened(true);
+  };
   useEffect(() => {
     getWeather(coordinate, apiKey)
       .then((data) => {
@@ -84,10 +94,10 @@ function App() {
       >
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+
           <Routes>
             <Route
-              path="/se_project_react/"
-              // path="/"
+              path="/"
               element={
                 <Main
                   weatherData={weatherData}
@@ -97,8 +107,7 @@ function App() {
               }
             />
             <Route
-              path="/se_project_react/profile"
-              // path="/profile"
+              path="/profile"
               element={
                 <Profile
                   avatar={avatar}
@@ -106,6 +115,8 @@ function App() {
                   clothingItems={clothingItems}
                   handleCardClick={handleCardClick}
                   handleAddClick={handleAddClick}
+                  toggleMobileMenu={toggleMobileMenu}
+                  isMobileMenuOpened={isMobileMenuOpened}
                 />
               }
             />

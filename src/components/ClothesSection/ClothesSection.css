@@ -35,5 +35,11 @@
 @media screen and (max-width: 770px) {
   .clothes-section__texts {
     justify-content: space-between;
+    gap: 0;
+  }
+  .clothes-section__list {
+    grid-template-columns: repeat(auto-fit, 162px);
+    grid-column-gap: 16px;
+    grid-row-gap: 16px;
   }
 }
