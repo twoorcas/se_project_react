@@ -1,3 +1,6 @@
+.modal__mobile-menu {
+  visibility: hidden;
+}
 @media screen and (max-width: 770px) {
   .modal {
     position: fixed;
@@ -10,11 +13,12 @@
     justify-content: center;
     align-items: center;
     visibility: hidden;
+    z-index: 99;
   }
   .modal_opened {
     visibility: visible;
   }
-  .modal__mobile-menu {
+  .modal__mobile-menu_content {
     display: flex;
     flex-direction: column;
     background: white;
@@ -22,9 +26,8 @@
     align-items: center;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
     width: 100%;
-    position: absolute;
-    top: 5px;
-    z-index: 99;
+    top: 18px;
+    position: fixed;
   }
   .mobile-menu__user-container {
     display: flex;
