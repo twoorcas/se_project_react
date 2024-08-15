@@ -35,6 +35,7 @@
 @media screen and (max-width: 770px) and (min-width: 343px) {
   .profile {
     padding: 0px;
+    z-index: 2;
   }
 
   .profile__side-bar {
@@ -44,10 +45,10 @@
     padding-top: 20px;
     padding-bottom: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: start;
+    flex-direction: row;
     position: relative;
     width: 100%;
+    gap: 20px;
   }
   .profile__button {
     display: block;

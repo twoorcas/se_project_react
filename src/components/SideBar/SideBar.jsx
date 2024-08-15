@@ -8,8 +8,8 @@ function SideBar({ avatar, username }) {
         <p className="side-bar__username">{username}</p>
       </div>
       <div className="side-bar__content_text">
+        <p className="side-bar__text_username">{username}</p>
         <p className="side-bar__text">Change profile data</p>
-
         <p className="side-bar__text">Log out</p>
       </div>
     </>
