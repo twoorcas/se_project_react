@@ -27,6 +27,7 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [toDeleteItem, setToDeleteItem] = useState("");
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
     setActiveModal("add-clothes-modal");
@@ -72,6 +73,14 @@ function App() {
     }
     return setIsMobileMenuOpened(true);
   };
+  const handleResize = () => {
+    if (window.innerWidth > 770) {
+      setIsMobileMenuOpened(false);
+    }
+    if (window.innerWidth < 345) {
+      setIsMobileMenuOpened(false);
+    }
+  };
   useEffect(() => {
     getWeather(coordinate, apiKey)
       .then((data) => {
@@ -85,6 +94,8 @@ function App() {
         setClothingItems(data);
       })
       .catch(console.error);
+    window.addEventListener("resize", handleResize());
+    return window.removeEventListener("resize", handleResize());
   }, []);
 
   return (

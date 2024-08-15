@@ -1,6 +1,7 @@
 .modal__mobile-menu {
-  visibility: hidden;
+  display: none;
 }
+
 @media screen and (max-width: 770px) {
   .modal {
     position: fixed;
@@ -17,8 +18,9 @@
   }
   .modal_opened {
     visibility: visible;
+    z-index: 99;
   }
-  .modal__mobile-menu_content {
+  .mobile-menu_content {
     display: flex;
     flex-direction: column;
     background: white;

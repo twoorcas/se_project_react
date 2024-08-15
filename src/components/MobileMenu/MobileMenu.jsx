@@ -7,13 +7,15 @@ function MobileMenu({
   toggleMobileMenu,
   isMobileMenuOpened,
 }) {
+  const handleOpenMenu = () => {
+    if (isMobileMenuOpened && window.innerWidth <= 770) {
+      return "modal_opened";
+    }
+    return "";
+  };
   return (
-    <div
-      className={` modal  ${
-        isMobileMenuOpened && "modal_opened modal__mobile-menu"
-      } `}
-    >
-      <div className="modal__mobile-menu_content">
+    <div className={`modal modal__mobile-menu ${handleOpenMenu()} `}>
+      <div className="mobile-menu_content">
         <div className="mobile-menu__user-container">
           <p className=" mobile-menu__username">Terrence Tegegne</p>
           <img
