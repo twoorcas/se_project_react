@@ -26,7 +26,7 @@
   padding: 0;
   padding-top: 8px;
 }
-/* .modal__error {
+.modal__error {
   display: block;
   margin: 0;
   padding: 0;
@@ -38,7 +38,7 @@
   line-height: 1;
   position: absolute;
   left: 50px;
-} */
+}
 /* .modal__input_type_error {
   border-bottom: 1px #ff0000 solid;
   margin: 0 0 2px 0;
@@ -84,16 +84,26 @@
   padding-bottom: 8px;
 }
 .modal__input_type_radio {
-  color: rgba(0, 0, 0, 0.5);
-  font-family: Cabinet Grotesk;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 1.2;
-  border-style: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 1);
-  padding-top: 8px;
-  color: rgba(0, 0, 0, 1);
+  position: relative;
+}
+[type="radio"]:checked::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: black;
+  position: absolute;
+  border-radius: 50%;
+  left: -1px;
+  top: 1px;
+
+  /* The background = the radio dot's color. */
+  background: black;
+
+  /* The border = spacing between the dot and the outer circle */
+  border: 2px solid #fff;
+
+  /*  box-shadow with no offset and no blur= outer circle */
+  box-shadow: 0 0 0 1px black;
 }
 .modal__input_type_radio:checked {
   color: rgba(0, 0, 0, 1);
@@ -105,12 +115,12 @@
   font-weight: 700;
   line-height: 1.2;
   color: rgba(0, 0, 0, 0.5);
-  /* color: rgba(236, 11, 11, 0.5); */
   display: flex;
   flex-direction: row;
   gap: 11px;
   padding-bottom: 8px;
 }
-.modal__radio-label + .modal__input_type_radio:checked {
+
+.modal__radio-label:has(.modal__input_type_radio:checked) {
   color: rgba(0, 0, 0, 1);
 }

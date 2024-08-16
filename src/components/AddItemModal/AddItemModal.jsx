@@ -12,7 +12,8 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
   };
   const { values, handleValueChange, setValues } = updateFormData(formData);
   const [errors, setErrors] = useState({});
-  const [radioChecked, setRadioChecked] = useState(false);
+
+  //form validator
   const validateForm = (data) => {
     let newErrors = { ...errors }; // a new object to hold the errors
     //inputEl.validity.valid
@@ -37,28 +38,32 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
     }
     if ("type" in data) {
       if (!data.type.trim()) {
-        setRadioChecked(false);
         newErrors.type = "Select a weather type";
       } else {
         newErrors.type = "";
-        setRadioChecked(true);
-        console.log("raiochecked");
+
+        // console.log("raiochecked");
       }
     }
     if (!data["type"]) {
-      setRadioChecked(false);
     }
     setErrors(newErrors); // Update error state
-    console.log(errors); //one too slow
-    console.log(newErrors); //latest
+    // console.log(errors); one too slow
+    // console.log(newErrors); latest
     return newErrors;
   };
 
-  function submitDisabled({ errors, values }) {
-    if (Object.keys(errors).length === 0 && Object.keys(values).length === 3) {
-      return false;
+  const [submitButtonState, setSubmitButtonState] = useState(true);
+  function toggleSubmitDisabled(allErrors) {
+    if (
+      Object.keys(allErrors).every((errorKey) => {
+        return allErrors[errorKey] === "";
+      })
+    ) {
+      return setSubmitButtonState(false);
     }
-    return true;
+
+    return setSubmitButtonState(true);
   }
 
   const handleChange = (e) => {
@@ -71,7 +76,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
       ...values,
       [e.target.name]: e.target.value,
     });
-    submitDisabled({ allErrors, values });
+    toggleSubmitDisabled(allErrors);
     validateForm({
       [e.target.name]: e.target.value,
     });
@@ -85,6 +90,13 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
       return true;
     } else return false;
   };
+  const [radioErrorActive, setRadioErrorActive] = useState(false);
+  const onSubmitClick = () => {
+    {
+      console.log("hi");
+      return setRadioErrorActive(true);
+    }
+  };
   const resetInputs = () => {
     setValues({
       nameValue: "",
@@ -92,13 +104,12 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
       type: "",
     });
     setErrors({});
+    setSubmitButtonState(true);
   };
   // useEffect
   useEffect(() => {
     resetInputs();
   }, [isOpen]);
-
-  //css modal__error_visible
 
   return (
     <>
@@ -108,7 +119,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
         onClose={onCloseModal}
         isOpen={isOpen}
         onSubmit={handleSubmit}
-        submitDisabled={submitDisabled}
+        submitButtonState={submitButtonState}
       >
         <div className="form__add-item">
           <label
@@ -151,14 +162,13 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
             <div className="raio-fieldset__texts">
               <legend
                 className={`modal__legend ${
-                  !errors.type ? "" : "modal__error_visible"
+                  !radioErrorActive ? "" : "modal__error_visible"
                 }`}
               >
-                Select the weather type:
+                Select the weather type:{" "}
+                {!radioErrorActive ? "" : "Please select"}
               </legend>
-              <span className="modal__error modal__error_type">
-                {errors.type}
-              </span>
+              <span className="modal__error modal__error_type">pp</span>
             </div>
             <label htmlFor="hot" className=" modal__radio-label">
               <input
