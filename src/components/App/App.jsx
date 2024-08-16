@@ -10,10 +10,9 @@ import { coordinate, apiKey } from "../../utils/constant";
 import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
-import avatar from "../../assets/avatar.png";
+import defaultAvatar from "../../assets/avatar.png";
 import { getItems, addaItem, deleteItem } from "../../utils/api";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
-import MobileMenu from "../MobileMenu/MobileMenu";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -27,10 +26,14 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [toDeleteItem, setToDeleteItem] = useState("");
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+  const [avatar, setAvatar] = useState(defaultAvatar);
+  const [userName, setUserName] = useState("Terrence Tegegne");
+
   // const [isMobile, setIsMobile] = useState(false);
+
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
-    setActiveModal("add-clothes-modal");
+    setActiveModal("add-item-modal");
   };
   const closeActiveModal = () => {
     setActiveModal("");
@@ -64,6 +67,7 @@ function App() {
     addaItem({ nameValue, urlValue, type })
       .then((data) => {
         setClothingItems([...clothingItems, data]);
+        closeActiveModal();
       })
       .catch(console.error);
   };
@@ -76,6 +80,7 @@ function App() {
   const handleResize = () => {
     if (window.innerWidth > 770) {
       setIsMobileMenuOpened(false);
+      console.log(">770px");
     }
     if (window.innerWidth < 345) {
       setIsMobileMenuOpened(false);
@@ -95,7 +100,8 @@ function App() {
       })
       .catch(console.error);
     window.addEventListener("resize", handleResize());
-    return window.removeEventListener("resize", handleResize());
+    // return window.removeEventListener("resize", handleResize());
+    //window evt listener did not work
   }, []);
 
   return (
@@ -104,7 +110,12 @@ function App() {
         value={{ currentTempUnit, handleToggleSwitchChange }}
       >
         <div className="page__content">
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            handleAddClick={handleAddClick}
+            weatherData={weatherData}
+            avatar={avatar}
+            userName={userName}
+          />
 
           <Routes>
             <Route
@@ -122,7 +133,7 @@ function App() {
               element={
                 <Profile
                   avatar={avatar}
-                  username="Terrence Tegegne"
+                  userName={userName}
                   clothingItems={clothingItems}
                   handleCardClick={handleCardClick}
                   handleAddClick={handleAddClick}
@@ -135,7 +146,7 @@ function App() {
           <Footer />
         </div>
         <AddItemModal
-          isOpen={activeModal === "add-clothes-modal"}
+          isOpen={activeModal === "add-item-modal"}
           onAddItem={onAddItem}
           onCloseModal={closeActiveModal}
         />

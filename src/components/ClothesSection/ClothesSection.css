@@ -9,10 +9,10 @@
   line-height: 1.2;
   color: rgba(0, 0, 0, 1);
   display: flex;
-
   padding-top: 16px;
   padding-bottom: 16px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 20px;
 }
 .clothes-section__text {
   margin: 0;
@@ -34,6 +34,9 @@
   grid-row-gap: 20px;
 }
 @media screen and (max-width: 770px) {
+  .clothes-section__texts {
+    justify-content: space-between;
+  }
   .clothes-section__list {
     grid-template-columns: repeat(auto-fit, 162px);
     grid-column-gap: 16px;

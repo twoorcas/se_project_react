@@ -6,6 +6,7 @@ function MobileMenu({
   handleAddClick,
   toggleMobileMenu,
   isMobileMenuOpened,
+  userName,
 }) {
   const handleOpenMenu = () => {
     if (isMobileMenuOpened && window.innerWidth <= 770) {
@@ -17,12 +18,8 @@ function MobileMenu({
     <div className={`modal modal__mobile-menu ${handleOpenMenu()} `}>
       <div className="mobile-menu_content">
         <div className="mobile-menu__user-container">
-          <p className=" mobile-menu__username">Terrence Tegegne</p>
-          <img
-            src={avatar}
-            alt="Terrence Tegegne"
-            className="mobile-menu__avatar"
-          />
+          <p className=" mobile-menu__username">{userName}</p>
+          <img src={avatar} alt={userName} className="mobile-menu__avatar" />
           <button
             type="button"
             className="mobile-menu__close"

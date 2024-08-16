@@ -5,7 +5,11 @@ function ItemCard({ item, onCardClick }) {
   };
   return (
     <li className="cards__card card">
-      <h2 className="card__name">{item.name}</h2>
+      <h2 className="card__name">
+        {item.name}
+        <button className="button card__like-button"></button>
+      </h2>
+
       <img
         src={item.imageUrl}
         alt={item.name}

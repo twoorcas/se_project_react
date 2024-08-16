@@ -1,7 +1,3 @@
-.modal__mobile-menu {
-  display: none;
-}
-
 @media screen and (max-width: 770px) {
   .modal {
     position: fixed;

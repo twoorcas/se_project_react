@@ -7,6 +7,7 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .card__name {
   font-family: Cabinet Grotesk;
   font-size: 16px;
@@ -20,6 +21,21 @@
   background: white;
   color: rgba(0, 0, 0, 0.6);
   border-radius: 3px;
+  position: absolute;
+}
+.card__like-button {
+  background-image: url(../../assets/❤.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-style: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+
+  right: -40px;
 }
 .card__image {
   width: 100%;

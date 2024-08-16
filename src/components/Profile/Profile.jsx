@@ -5,7 +5,7 @@ import avatar from "../../assets/avatar.png";
 import MobileMenu from "../MobileMenu/MobileMenu";
 function Profile({
   avatar,
-  username,
+  userName,
   handleCardClick,
   clothingItems,
   handleAddClick,
@@ -19,10 +19,11 @@ function Profile({
         handleAddClick={handleAddClick}
         toggleMobileMenu={toggleMobileMenu}
         isMobileMenuOpened={isMobileMenuOpened}
+        userName={userName}
       />
 
       <section className="profile__side-bar">
-        <SideBar avatar={avatar} username={username} />
+        <SideBar avatar={avatar} userName={userName} />
         <button className="profile__button" onClick={toggleMobileMenu}></button>
       </section>
 
