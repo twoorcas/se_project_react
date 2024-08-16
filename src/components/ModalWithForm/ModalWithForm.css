@@ -68,7 +68,15 @@
   color: white;
   padding: 8px 16px;
   width: 124px;
+  cursor: pointer;
 }
+.modal__save:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.modal__save_active {
+  background-color: rgba(0, 0, 0, 1);
+}
+
 @media screen and (max-width: 770px) {
   .modal {
     align-items: end;

@@ -1,6 +1,11 @@
 import "./DeleteConfirmationModal.css";
 
-function DeleteConfirmationModal({ activeModal, onClose, handleCardDelete }) {
+function DeleteConfirmationModal({
+  activeModal,
+  onClose,
+  handleCardDelete,
+  isLoading,
+}) {
   return (
     <div
       className={`modal  ${
@@ -17,7 +22,7 @@ function DeleteConfirmationModal({ activeModal, onClose, handleCardDelete }) {
           className="modal__text modal__text_delete"
           onClick={handleCardDelete}
         >
-          Yes, delete item
+          {`${isLoading ? "Deleting" : "Yes, delete"}`}
         </p>
         <p className="modal__text modal__text_cancel" onClick={onClose}>
           Cancel

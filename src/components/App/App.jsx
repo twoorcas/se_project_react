@@ -24,10 +24,11 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
-  const [toDeleteItem, setToDeleteItem] = useState("");
+  const [toDeleteItem, setToDeleteItem] = useState({});
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
   const [avatar, setAvatar] = useState(defaultAvatar);
   const [userName, setUserName] = useState("Terrence Tegegne");
+  const [isLoading, setIsLoading] = useState(false);
 
   // const [isMobile, setIsMobile] = useState(false);
 
@@ -49,13 +50,15 @@ function App() {
   const handleCardDelete = () => {
     deleteItem(toDeleteItem)
       .then((res) => {
-        setActiveModal("");
+        setIsLoading(true);
+        closeActiveModal();
         setClothingItems(
           clothingItems.filter((item) => item._id !== toDeleteItem._id)
         );
-        setToDeleteItem("");
+        setToDeleteItem({});
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(setIsLoading(false));
   };
 
   const openConfirmationModal = (card) => {
@@ -66,10 +69,14 @@ function App() {
   const onAddItem = ({ nameValue, urlValue, type }) => {
     addaItem({ nameValue, urlValue, type })
       .then((data) => {
+        setIsLoading(true);
         setClothingItems([...clothingItems, data]);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   const toggleMobileMenu = () => {
     if (isMobileMenuOpened) {
@@ -99,11 +106,29 @@ function App() {
         setClothingItems(data);
       })
       .catch(console.error);
-    window.addEventListener("resize", handleResize());
-    // return window.removeEventListener("resize", handleResize());
+
+    window.addEventListener("resize", handleResize);
+    return window.removeEventListener("resize", handleResize);
     //window evt listener did not work
   }, []);
 
+  useEffect(() => {
+    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
+
+    const handleEscClose = (e) => {
+      // define the function inside useEffect =not lose the reference on rerendering
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+
+    return () => {
+      //  clean up function for removing the listener when unmount
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
   return (
     <div className="page">
       <CurrentTempUnitContext.Provider
@@ -149,17 +174,20 @@ function App() {
           isOpen={activeModal === "add-item-modal"}
           onAddItem={onAddItem}
           onCloseModal={closeActiveModal}
+          isLoading={isLoading}
         />
         <ItemModal
           activeModal={activeModal}
           onClose={closeActiveModal}
           selectedCard={selectedCard}
           openConfirmationModal={openConfirmationModal}
+          isLoading={isLoading}
         />
         <DeleteConfirmationModal
           activeModal={activeModal}
           onClose={closeActiveModal}
           handleCardDelete={handleCardDelete}
+          isLoading={isLoading}
         />
       </CurrentTempUnitContext.Provider>
     </div>

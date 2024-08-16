@@ -6,7 +6,7 @@ function ModalWithForm({
   onClose,
   isOpen,
   onSubmit,
-  toggleSubmitButtonState,
+  submitDisabled,
 }) {
   return (
     <div className={`modal ${isOpen && "modal_opened "}`}>
@@ -17,12 +17,11 @@ function ModalWithForm({
           {children}
           <button
             className={`modal__save ${
-              !toggleSubmitButtonState && "modal__save_active "
+              !submitDisabled && "modal__save_active "
             }`}
             type="submit"
-            disabled={toggleSubmitButtonState}
+            disabled={submitDisabled}
           >
-            {/* css modal__save_active */}
             {buttonText}
           </button>
         </form>

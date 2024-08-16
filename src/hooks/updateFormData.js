@@ -1,5 +1,5 @@
 import { useState } from "react";
-function updateForm(formData) {
+function updateFormData(formData) {
   const [values, setValues] = useState(formData);
   const handleValueChange = (target) => {
     const { name, value } = target;
@@ -7,4 +7,4 @@ function updateForm(formData) {
   };
   return { values, handleValueChange, setValues };
 }
-export default updateForm;
+export default updateFormData;

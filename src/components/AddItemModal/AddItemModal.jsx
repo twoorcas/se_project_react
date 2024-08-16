@@ -1,68 +1,80 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 import "./AddItemModal.css";
-import updateForm from "../../hooks/updateFormData.js";
+import updateFormData from "../../hooks/updateFormData.js";
 
-const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
+const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
   //error test
   const formData = {
     nameValue: "",
     urlValue: "",
     type: "",
   };
-  const { values, handleValueChange, setValues } = updateForm(formData);
+  const { values, handleValueChange, setValues } = updateFormData(formData);
   const [errors, setErrors] = useState({});
-
+  const [radioChecked, setRadioChecked] = useState(false);
   const validateForm = (data) => {
     let newErrors = { ...errors }; // a new object to hold the errors
-    if (!data.nameValue.trim()) {
-      errors.nameValue = "Username is required";
-    } else if (data.nameValue.length < 2) {
-      errors.nameValue = "Username must be at least 2 characters long";
-    } else {
-      errors.nameValue = "";
+    //inputEl.validity.valid
+    //inputEl.validationMessage
+    if ("nameValue" in data) {
+      if (!data.nameValue.trim()) {
+        newErrors.nameValue = "Username is required";
+      } else if (data.nameValue.length < 2) {
+        newErrors.nameValue = "Username must be at least 2 characters long";
+      } else {
+        newErrors.nameValue = "";
+      }
     }
-    if (!data.urlValue.trim()) {
-      errors.urlValue = "Email is required";
-    } else if (data.urlValue.search("https://") === -1) {
-      errors.urlValue = "Email is invalid";
-    } else {
-      errors.urlValue = "";
+    if ("urlValue" in data) {
+      if (!data.urlValue.trim()) {
+        newErrors.urlValue = "Email is required";
+      } else if (data.urlValue.search("https://") === -1) {
+        newErrors.urlValue = "Email is invalid";
+      } else {
+        newErrors.urlValue = "";
+      }
     }
-
-    if (!data.type.trim()) {
-      errors.type = "Select a weather type";
-    } else {
-      errors.type = "";
+    if ("type" in data) {
+      if (!data.type.trim()) {
+        setRadioChecked(false);
+        newErrors.type = "Select a weather type";
+      } else {
+        newErrors.type = "";
+        setRadioChecked(true);
+        console.log("raiochecked");
+      }
+    }
+    if (!data["type"]) {
+      setRadioChecked(false);
     }
     setErrors(newErrors); // Update error state
-    console.log(errors);
+    console.log(errors); //one too slow
+    console.log(newErrors); //latest
     return newErrors;
   };
 
-  function toggleSubmitButtonState(newErrors) {
-    if (Object.keys(newErrors).length === 0) {
+  function submitDisabled({ errors, values }) {
+    if (Object.keys(errors).length === 0 && Object.keys(values).length === 3) {
       return false;
-    } else {
-      return true;
     }
+    return true;
   }
 
   const handleChange = (e) => {
     //handleChange first updates the form values by calling handleValueChange.
     //Then, it immediately calls validateForm to validate the form with the updated values.
     //validateForm now updates the state of errors directly using setErrors,
-    //ensuring that the state is always in sync with the latest input values.
+    //ensuring the state is always in sync with latest input values.
     handleValueChange(e.target);
-    const newErrors = validateForm({
+    const allErrors = validateForm({
       ...values,
       [e.target.name]: e.target.value,
     });
-    console.log({
-      ...values,
+    submitDisabled({ allErrors, values });
+    validateForm({
       [e.target.name]: e.target.value,
     });
-    toggleSubmitButtonState(newErrors);
   };
   function handleSubmit(e) {
     e.preventDefault();
@@ -85,25 +97,27 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
   useEffect(() => {
     resetInputs();
   }, [isOpen]);
-  // useEffect(() => {
-  //   validateForm(values);
-  // }, [values]);
 
   //css modal__error_visible
 
   return (
     <>
       <ModalWithForm
-        buttonText="Add garment"
+        buttonText={`${isLoading ? "Saving" : "Add garment"}`}
         titleText="New garment"
         onClose={onCloseModal}
         isOpen={isOpen}
         onSubmit={handleSubmit}
-        toggleSubmitButtonState={toggleSubmitButtonState}
+        submitDisabled={submitDisabled}
       >
         <div className="form__add-item">
-          <label htmlFor="name" className="modal__label">
-            Name{" "}
+          <label
+            htmlFor="name"
+            className={`modal__label ${
+              !errors.nameValue ? "" : "modal__error_visible"
+            }`}
+          >
+            Name {errors.nameValue}
             <input
               type="text"
               className="modal__input"
@@ -115,15 +129,14 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
               maxlength="30"
               required
             />
-            <span
-              className="modal__error modal__error_nameValue"
-              name="nameValue"
-            >
-              {errors.nameValue}
-            </span>
           </label>
-          <label htmlFor="imageURL" className="modal__label">
-            image{" "}
+          <label
+            htmlFor="imageURL"
+            className={`modal__label ${
+              !errors.urlValue ? "" : "modal__error_visible"
+            }`}
+          >
+            image {errors.urlValue}
             <input
               type="url"
               className="modal__input"
@@ -133,19 +146,17 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
               placeholder="image URL"
               required
             />
-            <span
-              className="modal__error modal__error_urlValue"
-              name="urlValue"
-            >
-              {errors.urlValue}
-            </span>
           </label>
           <fieldset className="modal__radio-fieldset">
             <div className="raio-fieldset__texts">
-              <legend className="modal__legend">
+              <legend
+                className={`modal__legend ${
+                  !errors.type ? "" : "modal__error_visible"
+                }`}
+              >
                 Select the weather type:
               </legend>
-              <span className="modal__error modal__error_type" name="type">
+              <span className="modal__error modal__error_type">
                 {errors.type}
               </span>
             </div>
