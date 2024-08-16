@@ -11,13 +11,10 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
     type: "",
   };
   const { values, handleValueChange, setValues } = updateForm(formData);
-  const [errors, setErrors] = useState({
-    nameValue: "",
-    urlValue: "",
-    type: "",
-  });
+  const [errors, setErrors] = useState({});
 
   const validateForm = (data) => {
+    let newErrors = { ...errors }; // a new object to hold the errors
     if (!data.nameValue.trim()) {
       errors.nameValue = "Username is required";
     } else if (data.nameValue.length < 2) {
@@ -38,10 +35,10 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
     } else {
       errors.type = "";
     }
-    return errors;
+    setErrors(newErrors); // Update error state
+    console.log(errors);
+    return newErrors;
   };
-
-  // const newErrors = validateForm(values);
 
   function toggleSubmitButtonState(newErrors) {
     if (Object.keys(newErrors).length === 0) {
@@ -52,8 +49,19 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
   }
 
   const handleChange = (e) => {
-    const newErrors = validateForm(values);
+    //handleChange first updates the form values by calling handleValueChange.
+    //Then, it immediately calls validateForm to validate the form with the updated values.
+    //validateForm now updates the state of errors directly using setErrors,
+    //ensuring that the state is always in sync with the latest input values.
     handleValueChange(e.target);
+    const newErrors = validateForm({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+    console.log({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
     toggleSubmitButtonState(newErrors);
   };
   function handleSubmit(e) {
