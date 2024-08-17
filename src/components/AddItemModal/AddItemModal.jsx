@@ -168,7 +168,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
                 Select the weather type:{" "}
                 {!radioErrorActive ? "" : "Please select"}
               </legend>
-              <span className="modal__error modal__error_type">pp</span>
+              <span className="modal__error modal__error_type"></span>
             </div>
             <label htmlFor="hot" className=" modal__radio-label">
               <input

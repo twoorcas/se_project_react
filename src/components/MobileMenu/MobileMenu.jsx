@@ -9,8 +9,8 @@ function MobileMenu({
   userName,
 }) {
   const handleOpenMenu = () => {
-    if (isMobileMenuOpened && window.innerWidth <= 770) {
-      return "modal_opened";
+    if (isMobileMenuOpened) {
+      return "modal_opened modal__mobile-menu_opened";
     }
     return "";
   };

@@ -2,15 +2,6 @@ import "./ToggleSwitch.css";
 import { useState, useContext, useEffect } from "react";
 import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
 function ToggleSwitch() {
-  //   const { tempUnit, handleToggleSwitchChange } = useContext(
-  //     tempUnitContext
-  //   );
-  //   const [checked, setChecked] = React.useState(tempUnit === "C");
-  //   const [tempUnit, setTempUnit] = useState("F");
-  //   const handleToggleSwitchChange = (e) => {
-  //     if (tempUnit === "F") return setTempUnit("C");
-  //     else return setTempUnit("F");
-  //   };
   const { currentTempUnit, handleToggleSwitchChange } = useContext(
     CurrentTempUnitContext
   );

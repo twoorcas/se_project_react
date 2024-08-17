@@ -2,26 +2,42 @@
   position: relative;
   border-radius: 10px;
   border: 1px rgba(0, 0, 0, 0.3) solid;
-  display: flex;
   overflow: hidden;
-  justify-content: center;
   cursor: pointer;
 }
-
+.card__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: transparent;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
 .card__name {
   font-family: Cabinet Grotesk;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: 1.2;
-  margin: 0 auto;
-  padding: 2px 12px;
-  position: absolute;
-  top: 15px;
-  background: white;
+  margin: 0;
   color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 3px;
-  position: absolute;
+  padding: 2px 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 .card__like-button {
   background-image: url(../../assets/❤.svg);
@@ -33,11 +49,17 @@
   cursor: pointer;
   width: 18px;
   height: 18px;
-  position: absolute;
-
-  right: -40px;
+  margin-left: 8px;
+  flex-shrink: 0;
 }
 .card__image {
   width: 100%;
+  height: 100%;
   object-fit: cover;
+  display: block;
+}
+@media screen and (max-width: 770px) {
+  .card__header {
+    padding-top: 7px;
+  }
 }

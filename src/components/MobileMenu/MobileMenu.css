@@ -1,3 +1,6 @@
+.mobile-menu_content {
+  display: none;
+}
 @media screen and (max-width: 770px) {
   .modal {
     position: fixed;
@@ -23,9 +26,10 @@
     border-radius: 10px;
     align-items: center;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
-    width: 100%;
     top: 18px;
     position: fixed;
+    max-width: 343px;
+    width: 100%;
   }
   .mobile-menu__user-container {
     display: flex;

@@ -20,6 +20,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
+
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
@@ -29,8 +30,6 @@ function App() {
   const [avatar, setAvatar] = useState(defaultAvatar);
   const [userName, setUserName] = useState("Terrence Tegegne");
   const [isLoading, setIsLoading] = useState(false);
-
-  // const [isMobile, setIsMobile] = useState(false);
 
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
@@ -84,15 +83,15 @@ function App() {
     }
     return setIsMobileMenuOpened(true);
   };
-  const handleResize = () => {
-    if (window.innerWidth > 770) {
-      setIsMobileMenuOpened(false);
-      console.log(">770px");
-    }
-    if (window.innerWidth < 345) {
-      setIsMobileMenuOpened(false);
-    }
-  };
+  // const handleResize = () => {
+  //   if (window.innerWidth > 770) {
+  //     setIsMobileMenuOpened(false);
+  //     console.log(">770px");
+  //   }
+  //   if (window.innerWidth < 345) {
+  //     setIsMobileMenuOpened(false);
+  //   }
+  // };
   useEffect(() => {
     getWeather(coordinate, apiKey)
       .then((data) => {
@@ -106,10 +105,27 @@ function App() {
         setClothingItems(data);
       })
       .catch(console.error);
+  }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 770) {
+        setIsMobileMenuOpened(false);
+        console.log(">770px");
+      }
+      if (window.innerWidth < 345) {
+        setIsMobileMenuOpened(false);
+      }
+    };
+    // call once to start off
+    handleResize();
+    // add listener
     window.addEventListener("resize", handleResize);
-    return window.removeEventListener("resize", handleResize);
-    //window evt listener did not work
+
+    // clean up
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
