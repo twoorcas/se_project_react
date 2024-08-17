@@ -121,7 +121,6 @@ function App() {
     handleResize();
     // add listener
     window.addEventListener("resize", handleResize);
-
     // clean up
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -130,16 +129,13 @@ function App() {
 
   useEffect(() => {
     if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
-
     const handleEscClose = (e) => {
       // define the function inside useEffect =not lose the reference on rerendering
       if (e.key === "Escape") {
         closeActiveModal();
       }
     };
-
     document.addEventListener("keydown", handleEscClose);
-
     return () => {
       //  clean up function for removing the listener when unmount
       document.removeEventListener("keydown", handleEscClose);

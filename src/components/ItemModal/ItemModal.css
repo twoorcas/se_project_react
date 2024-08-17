@@ -19,13 +19,28 @@
   width: 100%;
   object-fit: cover;
 }
+.modal__content_type_image_info {
+  width: 100%;
+  background-color: transparent;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  padding: 20px 32px 32px 32px;
+}
 .modal__footer {
   display: flex;
-  padding-left: 32px;
-  padding-top: 20px;
-  padding-bottom: 32px;
   gap: 12px;
   flex-direction: column;
+  /* text-overflow: ellipsis; */
+  white-space: nowrap;
+  overflow: hidden;
+  /* overflow-wrap: break-word; */
+  /* word-wrap: break-word; */
 }
 .modal__caption {
   margin: 0;
@@ -34,6 +49,11 @@
   font-style: normal;
   font-weight: 700;
   line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 .modal__weather {
   margin: 0;
@@ -42,11 +62,13 @@
   font-style: normal;
   font-weight: 700;
   line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 .modal__delete-button {
-  position: absolute;
-  top: 518px;
-  left: 365px;
   border-style: none;
   background-color: transparent;
   padding: 0;

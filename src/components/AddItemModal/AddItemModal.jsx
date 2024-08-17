@@ -91,7 +91,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
     } else return false;
   };
   const [radioErrorActive, setRadioErrorActive] = useState(false);
-  const onSubmitClick = () => {
+  const onSubmitHover = () => {
     {
       console.log("hi");
       return setRadioErrorActive(true);
@@ -136,8 +136,8 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
               onChange={handleChange}
               name="nameValue"
               placeholder="Name"
-              minlength="2"
-              maxlength="30"
+              minLength={2}
+              maxLength={30}
               required
             />
           </label>
@@ -161,9 +161,8 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
           <fieldset className="modal__radio-fieldset">
             <div className="raio-fieldset__texts">
               <legend
-                className={`modal__legend ${
-                  !radioErrorActive ? "" : "modal__error_visible"
-                }`}
+                className={`modal__legend
+                    ${!radioErrorActive ? "" : "modal__error_visible"}`}
               >
                 Select the weather type:{" "}
                 {!radioErrorActive ? "" : "Please select"}

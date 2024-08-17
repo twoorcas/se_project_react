@@ -8,8 +8,6 @@
   color: rgba(0, 0, 0, 1);
   display: flex;
   padding-top: 16px;
-  padding-bottom: 16px;
-  /* justify-content: space-between; */
   gap: 20px;
 }
 .clothes-section__text {
