@@ -7,15 +7,16 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
     useFormAndValidation(["nameValue", "urlValue", "type"]);
   const [submitButtonState, setSubmitButtonState] = useState(true);
   function toggleSubmitDisabled() {
-    isValid ? setSubmitButtonState(false) : setSubmitButtonState(true);
+    isValid &&
+    (checkRadioButton("hot") ||
+      checkRadioButton("cold") ||
+      checkRadioButton("warm"))
+      ? setSubmitButtonState(false)
+      : setSubmitButtonState(true);
   }
-  let newValues = {};
-  let newErrors = {};
 
   const handleChange = (e) => {
     handleValueChange(e);
-    newValues = { [e.target.name]: e.target.value } || {};
-    newErrors = { [e.target.name]: e.target.validationMessage } || {};
   };
   //handleChange first updates the form values by calling handleValueChange.
   //Then, it immediately calls validateForm to validate the form with the updated values.
@@ -60,7 +61,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
           <input
             type="text"
             className="modal__input"
-            value={values.nameValue}
+            value={values.nameValue || ""}
             onChange={handleChange}
             name="nameValue"
             placeholder="Name"
@@ -80,7 +81,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
           <input
             type="url"
             className="modal__input"
-            value={values.urlValue}
+            value={values.urlValue || ""}
             onChange={handleChange}
             name="urlValue"
             placeholder="image URL"

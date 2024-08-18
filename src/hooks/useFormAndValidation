@@ -24,7 +24,6 @@ export function useFormAndValidation(initialFieldNames=[]) {
     setValues(newValues);
     setErrors(newErrors);
     setIsValid(newIsValid);
-    console.log("reset")
   }, [setValues, setErrors, setIsValid]);
 
   return {values,setValues, handleValueChange, errors, isValid, resetForm, setIsValid };
