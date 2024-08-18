@@ -82,9 +82,7 @@
     align-items: end;
   }
   .modal__content {
-    max-width: 375px;
-  }
-  .modal__content {
+    max-width: 343px;
     padding: 32px 16px;
   }
 }

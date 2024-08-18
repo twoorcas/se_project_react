@@ -9,11 +9,11 @@ function ModalWithForm({
   submitButtonState,
 }) {
   return (
-    <div className={`modal ${isOpen && "modal_opened "}`}>
+    <div className={`modal ${isOpen && "modal_opened"}`}>
       <div className="modal__content">
         <h2 className="modal__title">{titleText}</h2>
         <button type="button" className="modal__close" onClick={onClose} />
-        <form className="modal__form" onSubmit={onSubmit}>
+        <form className="modal__form form" onSubmit={onSubmit}>
           {children}
           <button
             className={`modal__save ${

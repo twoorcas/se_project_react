@@ -47,9 +47,9 @@ function App() {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
   };
   const handleCardDelete = () => {
+    setIsLoading(true);
     deleteItem(toDeleteItem)
       .then((res) => {
-        setIsLoading(true);
         closeActiveModal();
         setClothingItems(
           clothingItems.filter((item) => item._id !== toDeleteItem._id)
@@ -57,7 +57,7 @@ function App() {
         setToDeleteItem({});
       })
       .catch(console.error)
-      .finally(setIsLoading(false));
+      .finally(() => setIsLoading(false));
   };
 
   const openConfirmationModal = (card) => {
@@ -66,9 +66,9 @@ function App() {
     setActiveModal("delete-confirmation");
   };
   const onAddItem = ({ nameValue, urlValue, type }) => {
+    setIsLoading(true);
     addaItem({ nameValue, urlValue, type })
       .then((data) => {
-        setIsLoading(true);
         setClothingItems([...clothingItems, data]);
         closeActiveModal();
       })
