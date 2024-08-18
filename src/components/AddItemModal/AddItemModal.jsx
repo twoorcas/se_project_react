@@ -4,29 +4,27 @@ import "./AddItemModal.css";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
   const { values, setValues, handleValueChange, errors, isValid, resetForm } =
-    useFormAndValidation();
+    useFormAndValidation(["nameValue", "urlValue", "type"]);
   const [submitButtonState, setSubmitButtonState] = useState(true);
-  function toggleSubmitDisabled(isValid) {
+  function toggleSubmitDisabled() {
     isValid ? setSubmitButtonState(false) : setSubmitButtonState(true);
   }
   let newValues = {};
   let newErrors = {};
 
   const handleChange = (e) => {
-    //handleChange first updates the form values by calling handleValueChange.
-    //Then, it immediately calls validateForm to validate the form with the updated values.
-    //validateForm now updates the state of errors directly using setErrors,
-    //ensuring the state is always in sync with latest input values.
     handleValueChange(e);
-    toggleSubmitDisabled(isValid);
-    newValues = { [e.target.name]: e.target.value };
+    newValues = { [e.target.name]: e.target.value } || {};
     newErrors = { [e.target.name]: e.target.validationMessage } || {};
   };
+  //handleChange first updates the form values by calling handleValueChange.
+  //Then, it immediately calls validateForm to validate the form with the updated values.
+  //validateForm now updates the state of errors directly using setErrors,
+  //ensuring the state is always in sync with latest input values.
   function handleSubmit(e) {
     e.preventDefault();
     onAddItem(values);
     resetForm();
-    setSubmitButtonState(true);
   }
   const checkRadioButton = (value) => {
     if (values.type === value) {
@@ -38,8 +36,10 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
   useEffect(() => {
     resetForm();
     setSubmitButtonState(true);
-  }, [isOpen]);
-
+  }, [isOpen, resetForm]);
+  useEffect(() => {
+    toggleSubmitDisabled();
+  }, [values]);
   return (
     <ModalWithForm
       buttonText={`${isLoading ? "Saving" : "Add garment"}`}
@@ -53,14 +53,14 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
         <label
           htmlFor="name"
           className={`modal__label ${
-            !newErrors.nameValue ? "" : "modal__error_visible"
+            !errors.nameValue ? "" : "modal__error_visible"
           }`}
         >
-          Name {newErrors.nameValue || ""}
+          Name {errors.nameValue || ""}
           <input
             type="text"
             className="modal__input"
-            value={newValues.nameValue}
+            value={values.nameValue}
             onChange={handleChange}
             name="nameValue"
             placeholder="Name"
@@ -73,14 +73,14 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
         <label
           htmlFor="imageURL"
           className={`modal__label ${
-            !newErrors.urlValue ? "" : "modal__error_visible"
+            !errors.urlValue ? "" : "modal__error_visible"
           }`}
         >
-          image {newErrors.urlValue || ""}
+          image {errors.urlValue || ""}
           <input
             type="url"
             className="modal__input"
-            value={newValues.urlValue}
+            value={values.urlValue}
             onChange={handleChange}
             name="urlValue"
             placeholder="image URL"
