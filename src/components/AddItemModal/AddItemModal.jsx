@@ -52,7 +52,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
     >
       <div className="form__add-item">
         <label
-          htmlFor="name"
+          htmlFor="nameValue"
           className={`modal__label ${
             !errors.nameValue ? "" : "modal__error_visible"
           }`}
@@ -68,7 +68,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
             minLength={2}
             maxLength={30}
             required
-            id="name"
+            id="nameValue"
           />
         </label>
         <label
