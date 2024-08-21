@@ -2,8 +2,14 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 import "./AddItemModal.css";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
-  const { values, setValues, handleValueChange, errors, isValid, resetForm } =
+const AddItemModal = ({
+  isOpen,
+  onAddItem,
+  onCloseModal,
+  isLoading,
+  isSubmitted,
+}) => {
+  const { values, setValues, handleValueChange, errors, isValid } =
     useFormAndValidation(["nameValue", "urlValue", "type"]);
   const [submitButtonState, setSubmitButtonState] = useState(true);
   function toggleSubmitDisabled() {
@@ -25,7 +31,6 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
   function handleSubmit(e) {
     e.preventDefault();
     onAddItem(values);
-    resetForm();
   }
   const checkRadioButton = (value) => {
     if (values.type === value) {
@@ -37,7 +42,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
   useEffect(() => {
     resetForm();
     setSubmitButtonState(true);
-  }, [isOpen, resetForm]);
+  }, [isSubmitted, resetForm]);
   useEffect(() => {
     toggleSubmitDisabled();
   }, [values]);
@@ -72,7 +77,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal, isLoading }) => {
           />
         </label>
         <label
-          htmlFor="imageURL"
+          htmlFor="imgURL"
           className={`modal__label ${
             !errors.urlValue ? "" : "modal__error_visible"
           }`}

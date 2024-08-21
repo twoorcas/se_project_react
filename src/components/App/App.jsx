@@ -30,7 +30,7 @@ function App() {
   const [avatar, setAvatar] = useState(defaultAvatar);
   const [userName, setUserName] = useState("Terrence Tegegne");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
     setActiveModal("add-item-modal");
@@ -38,6 +38,7 @@ function App() {
   const closeActiveModal = () => {
     setActiveModal("");
   };
+
   const handleCardClick = (card) => {
     setIsMobileMenuOpened(false);
     setSelectedCard(card);
@@ -71,6 +72,7 @@ function App() {
       .then((data) => {
         setClothingItems([...clothingItems, data]);
         closeActiveModal();
+        setIsSubmitted(true);
       })
       .catch(console.error)
       .finally(() => {
@@ -187,6 +189,7 @@ function App() {
           onAddItem={onAddItem}
           onCloseModal={closeActiveModal}
           isLoading={isLoading}
+          isSubmitted={isSubmitted}
         />
         <ItemModal
           activeModal={activeModal}
