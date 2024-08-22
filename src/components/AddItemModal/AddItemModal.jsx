@@ -9,7 +9,7 @@ const AddItemModal = ({
   isLoading,
   isSubmitted,
 }) => {
-  const { values, setValues, handleValueChange, errors, isValid } =
+  const { values, setValues, handleValueChange, errors, isValid, resetForm } =
     useFormAndValidation(["nameValue", "urlValue", "type"]);
   const [submitButtonState, setSubmitButtonState] = useState(true);
   function toggleSubmitDisabled() {
