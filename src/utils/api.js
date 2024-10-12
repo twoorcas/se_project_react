@@ -7,11 +7,9 @@ function getResult(res) {
 
   return Promise.reject(`Error: ${res.status}`);
 }
-
 function getItems() {
   return fetch(`${baseUrl}/items`).then((res) => getResult(res));
 }
-
 function addaItem({ nameValue, urlValue, type }) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
@@ -29,4 +27,5 @@ function deleteItem({ _id }) {
     headers: { "Content-Type": "application/json" },
   }).then((res) => getResult(res));
 }
-export { getItems, getResult, addaItem, deleteItem };
+
+export { getItems, getResult, addaItem, deleteItem, baseUrl };

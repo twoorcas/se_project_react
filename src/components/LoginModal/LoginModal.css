@@ -1,0 +1,21 @@
+.form__login {
+  position: relative;
+}
+.modal__register {
+  border-style: none;
+  background-color: transparent;
+  font-family: Cabinet Grotesk;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.2;
+  position: absolute;
+  left: 80px;
+  top: 147px;
+  color: rgba(0, 0, 0, 0.3);
+  padding: 0;
+  cursor: pointer;
+}
+.modal__register:hover {
+  color: rgba(0, 0, 0, 0.6);
+}

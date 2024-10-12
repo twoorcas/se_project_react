@@ -4,6 +4,8 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import LoginModal from "../LoginModal/LoginModal";
 import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinate, apiKey } from "../../utils/constant";
@@ -12,7 +14,9 @@ import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import defaultAvatar from "../../assets/avatar.png";
 import { getItems, addaItem, deleteItem } from "../../utils/api";
+import { signIn, signUp, verifyToken } from "../../utils/auth";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
+// import { error } from "console";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -21,7 +25,7 @@ function App() {
     city: "",
   });
 
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState("login-modal");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
@@ -31,6 +35,36 @@ function App() {
   const [userName, setUserName] = useState("Terrence Tegegne");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const onLogin = ({ email, password }) => {
+    setIsLoading(true);
+    return signIn({ email, password })
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+        } else throw new Error("no token");
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
+  const onRegister = ({ email, password, name, avatar }) => {
+    setIsLoading(true);
+    return signUp({ email, password, name, avatar })
+      .then((res) => {
+        closeActiveModal();
+        signIn({ email: res.email, password: res.password });
+        //TODO anything after send signin req????
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
+
+  //to open register form
+  const handleRegisterClick = () => {
+    setIsMobileMenuOpened(false);
+    setActiveModal("register-modal");
+  };
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
     setActiveModal("add-item-modal");
@@ -85,15 +119,6 @@ function App() {
     }
     return setIsMobileMenuOpened(true);
   };
-  // const handleResize = () => {
-  //   if (window.innerWidth > 770) {
-  //     setIsMobileMenuOpened(false);
-  //     console.log(">770px");
-  //   }
-  //   if (window.innerWidth < 345) {
-  //     setIsMobileMenuOpened(false);
-  //   }
-  // };
   useEffect(() => {
     getWeather(coordinate, apiKey)
       .then((data) => {
@@ -107,6 +132,9 @@ function App() {
         setClothingItems(data);
       })
       .catch(console.error);
+
+    const token = JSON.parse(localStorage.getItem("jwt"));
+    verifyToken(token).then();
   }, []);
 
   useEffect(() => {
@@ -203,6 +231,20 @@ function App() {
           onClose={closeActiveModal}
           handleCardDelete={handleCardDelete}
           isLoading={isLoading}
+        />
+        <RegisterModal
+          isOpen={activeModal === "register-modal"}
+          onCloseModal={closeActiveModal}
+          isLoading={isLoading}
+          isSubmitted={isSubmitted}
+          onRegister={onRegister}
+        />
+        <LoginModal
+          isOpen={activeModal === "login-modal"}
+          onCloseModal={closeActiveModal}
+          isLoading={isLoading}
+          isSubmitted={isSubmitted}
+          onLogin={onLogin}
         />
       </CurrentTempUnitContext.Provider>
     </div>
