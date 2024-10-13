@@ -40,10 +40,10 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setCurrentToken] = useState("");
   const [currentUser, setCurrentUser] = useState({
-    name: "",
-    email: "",
-    avatar: "",
+    userName: userName,
+    avatar: avatar,
   });
+  const initial = userName.split("")[0];
   const navigate = useNavigate();
   const onLogin = ({ email, password }) => {
     setIsLoading(true);
@@ -207,6 +207,7 @@ function App() {
               weatherData={weatherData}
               avatar={avatar}
               userName={userName}
+              initial={initial}
             />
 
             <Routes>
@@ -231,6 +232,7 @@ function App() {
                     handleAddClick={handleAddClick}
                     toggleMobileMenu={toggleMobileMenu}
                     isMobileMenuOpened={isMobileMenuOpened}
+                    initial={initial}
                   />
                 }
               />

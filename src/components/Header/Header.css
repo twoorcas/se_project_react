@@ -57,9 +57,30 @@
   font-weight: 700;
   line-height: 1.2;
 }
+.header__placeholder {
+  margin: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 1);
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24.8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .header__avatar {
   height: 40px;
   width: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 770px) {

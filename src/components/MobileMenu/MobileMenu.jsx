@@ -7,6 +7,7 @@ function MobileMenu({
   toggleMobileMenu,
   isMobileMenuOpened,
   userName,
+  initial,
 }) {
   const handleOpenMenu = () => {
     if (isMobileMenuOpened) {
@@ -19,7 +20,17 @@ function MobileMenu({
       <div className="mobile-menu_content">
         <div className="mobile-menu__user-container">
           <p className=" mobile-menu__username">{userName}</p>
-          <img src={avatar} alt={userName} className="mobile-menu__avatar" />
+          <p className="mobile-menu__placeholder">
+            {!avatar ? (
+              initial
+            ) : (
+              <img
+                src={avatar}
+                alt={userName}
+                className="mobile-menu__avatar"
+              />
+            )}
+          </p>
           <button
             type="button"
             className="mobile-menu__close"

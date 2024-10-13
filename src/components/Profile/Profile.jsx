@@ -11,6 +11,7 @@ function Profile({
   handleAddClick,
   toggleMobileMenu,
   isMobileMenuOpened,
+  initial,
 }) {
   return (
     <div className="profile">
@@ -20,10 +21,11 @@ function Profile({
         toggleMobileMenu={toggleMobileMenu}
         isMobileMenuOpened={isMobileMenuOpened}
         userName={userName}
+        initial={initial}
       />
 
       <section className="profile__side-bar">
-        <SideBar avatar={avatar} userName={userName} />
+        <SideBar avatar={avatar} userName={userName} initial={initial} />
         <button className="profile__button" onClick={toggleMobileMenu}></button>
       </section>
 

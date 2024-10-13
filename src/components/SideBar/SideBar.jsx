@@ -1,10 +1,16 @@
 import "./SideBar.css";
-function SideBar({ avatar, userName }) {
+function SideBar({ avatar, userName, initial }) {
   return (
     <>
       {" "}
       <div className="side-bar__content_user">
-        <img src={avatar} alt={userName} className="side-bar__avatar" />
+        <p className="side-bar__placeholder">
+          {!avatar ? (
+            initial
+          ) : (
+            <img src={avatar} alt={userName} className="side-bar__avatar" />
+          )}
+        </p>
         <p className="side-bar__username">{userName}</p>
       </div>
       <div className="side-bar__content_text">
