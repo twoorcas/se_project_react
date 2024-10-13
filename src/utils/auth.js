@@ -23,13 +23,4 @@ function signIn({ email, password }) {
   }).then((res) => getResult(res));
 }
 
-function verifyToken(token) {
-  return fetch(`${baseUrl}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
-    },
-  }).then((res) => getResult(res));
-}
-export { signIn, signUp, verifyToken };
+export { signIn, signUp };

@@ -1,5 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
@@ -10,13 +11,14 @@ import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinate, apiKey } from "../../utils/constant";
 import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import defaultAvatar from "../../assets/avatar.png";
-import { getItems, addaItem, deleteItem } from "../../utils/api";
-import { signIn, signUp, verifyToken } from "../../utils/auth";
+import { getItems, addaItem, deleteItem, getUserInfo } from "../../utils/api";
+import { signIn, signUp } from "../../utils/auth";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
-// import { error } from "console";
+import { setToken, getToken } from "../../utils/token";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -35,13 +37,24 @@ function App() {
   const [userName, setUserName] = useState("Terrence Tegegne");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setCurrentToken] = useState("");
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+    avatar: "",
+  });
+  const navigate = useNavigate();
   const onLogin = ({ email, password }) => {
     setIsLoading(true);
     return signIn({ email, password })
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("jwt", res.token);
+          setToken(res.token);
+          setIsLoggedIn(true);
+          navigate("/users/me");
         } else throw new Error("no token");
+        //else what????
       })
       .catch((err) => {
         console.error(err);
@@ -53,7 +66,7 @@ function App() {
     return signUp({ email, password, name, avatar })
       .then((res) => {
         closeActiveModal();
-        signIn({ email: res.email, password: res.password });
+        onLogin({ email: res.email, password: res.password });
         //TODO anything after send signin req????
       })
       .catch(console.error)
@@ -83,7 +96,7 @@ function App() {
   };
   const handleCardDelete = () => {
     setIsLoading(true);
-    deleteItem(toDeleteItem)
+    deleteItem(toDeleteItem, token)
       .then((res) => {
         closeActiveModal();
         setClothingItems(
@@ -102,7 +115,7 @@ function App() {
   };
   const onAddItem = ({ nameValue, urlValue, type }) => {
     setIsLoading(true);
-    addaItem({ nameValue, urlValue, type })
+    addaItem({ nameValue, urlValue, type }, token)
       .then((data) => {
         setClothingItems([...clothingItems, data]);
         closeActiveModal();
@@ -127,21 +140,32 @@ function App() {
       })
       .catch(console.error);
 
-    getItems()
+    getItems(token)
       .then((data) => {
         setClothingItems(data);
       })
       .catch(console.error);
 
-    const token = JSON.parse(localStorage.getItem("jwt"));
-    verifyToken(token).then();
+    if (getToken()) {
+      setCurrentToken(getToken());
+      getUserInfo(token)
+        .then(({ avatar, email, name }) => {
+          setIsLoggedIn(true);
+          setAvatar(avatar);
+          setUserName(name);
+          navigate("/users/me");
+
+          // a previous site???
+        })
+        .catch(console.error);
+    } else return;
+    //else what?????
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 770) {
         setIsMobileMenuOpened(false);
-        console.log(">770px");
       }
       if (window.innerWidth < 345) {
         setIsMobileMenuOpened(false);
@@ -172,82 +196,84 @@ function App() {
     };
   }, [activeModal]);
   return (
-    <div className="page">
-      <CurrentTempUnitContext.Provider
-        value={{ currentTempUnit, handleToggleSwitchChange }}
-      >
-        <div className="page__content">
-          <Header
-            handleAddClick={handleAddClick}
-            weatherData={weatherData}
-            avatar={avatar}
-            userName={userName}
-          />
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="page">
+        <CurrentTempUnitContext.Provider
+          value={{ currentTempUnit, handleToggleSwitchChange }}
+        >
+          <div className="page__content">
+            <Header
+              handleAddClick={handleAddClick}
+              weatherData={weatherData}
+              avatar={avatar}
+              userName={userName}
+            />
 
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <Profile
-                  avatar={avatar}
-                  userName={userName}
-                  clothingItems={clothingItems}
-                  handleCardClick={handleCardClick}
-                  handleAddClick={handleAddClick}
-                  toggleMobileMenu={toggleMobileMenu}
-                  isMobileMenuOpened={isMobileMenuOpened}
-                />
-              }
-            />
-          </Routes>
-          <Footer />
-        </div>
-        <AddItemModal
-          isOpen={activeModal === "add-item-modal"}
-          onAddItem={onAddItem}
-          onCloseModal={closeActiveModal}
-          isLoading={isLoading}
-          isSubmitted={isSubmitted}
-        />
-        <ItemModal
-          activeModal={activeModal}
-          onClose={closeActiveModal}
-          selectedCard={selectedCard}
-          openConfirmationModal={openConfirmationModal}
-          isLoading={isLoading}
-        />
-        <DeleteConfirmationModal
-          activeModal={activeModal}
-          onClose={closeActiveModal}
-          handleCardDelete={handleCardDelete}
-          isLoading={isLoading}
-        />
-        <RegisterModal
-          isOpen={activeModal === "register-modal"}
-          onCloseModal={closeActiveModal}
-          isLoading={isLoading}
-          isSubmitted={isSubmitted}
-          onRegister={onRegister}
-        />
-        <LoginModal
-          isOpen={activeModal === "login-modal"}
-          onCloseModal={closeActiveModal}
-          isLoading={isLoading}
-          isSubmitted={isSubmitted}
-          onLogin={onLogin}
-        />
-      </CurrentTempUnitContext.Provider>
-    </div>
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
+                    handleCardClick={handleCardClick}
+                    clothingItems={clothingItems}
+                  />
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    avatar={avatar}
+                    userName={userName}
+                    clothingItems={clothingItems}
+                    handleCardClick={handleCardClick}
+                    handleAddClick={handleAddClick}
+                    toggleMobileMenu={toggleMobileMenu}
+                    isMobileMenuOpened={isMobileMenuOpened}
+                  />
+                }
+              />
+            </Routes>
+            <Footer />
+          </div>
+          <AddItemModal
+            isOpen={activeModal === "add-item-modal"}
+            onAddItem={onAddItem}
+            onCloseModal={closeActiveModal}
+            isLoading={isLoading}
+            isSubmitted={isSubmitted}
+          />
+          <ItemModal
+            activeModal={activeModal}
+            onClose={closeActiveModal}
+            selectedCard={selectedCard}
+            openConfirmationModal={openConfirmationModal}
+            isLoading={isLoading}
+          />
+          <DeleteConfirmationModal
+            activeModal={activeModal}
+            onClose={closeActiveModal}
+            handleCardDelete={handleCardDelete}
+            isLoading={isLoading}
+          />
+          <RegisterModal
+            isOpen={activeModal === "register-modal"}
+            onCloseModal={closeActiveModal}
+            isLoading={isLoading}
+            isSubmitted={isSubmitted}
+            onRegister={onRegister}
+          />
+          <LoginModal
+            isOpen={activeModal === "login-modal"}
+            onCloseModal={closeActiveModal}
+            isLoading={isLoading}
+            isSubmitted={isSubmitted}
+            onLogin={onLogin}
+          />
+        </CurrentTempUnitContext.Provider>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 export default App;
