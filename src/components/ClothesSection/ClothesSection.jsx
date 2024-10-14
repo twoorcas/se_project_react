@@ -1,7 +1,13 @@
 import "./ClothesSection.css";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 import ItemCard from "../ItemCard/ItemCard";
 function ClothesSection({ handleCardClick, clothingItems, handleAddClick }) {
+  const { _id } = useContext(CurrentUserContext);
+  const userAddedClothingItems = clothingItems.filter(
+    (item) => item.owner === _id
+  );
   return (
     <div className="clothes-section">
       <span className="clothes-section__texts">
@@ -11,7 +17,7 @@ function ClothesSection({ handleCardClick, clothingItems, handleAddClick }) {
         </p>
       </span>
       <ul className="clothes-section__list">
-        {clothingItems.toReversed().map((item) => {
+        {userAddedClothingItems.toReversed().map((item) => {
           return (
             <ItemCard
               key={item._id}

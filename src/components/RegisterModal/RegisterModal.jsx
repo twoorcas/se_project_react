@@ -8,6 +8,7 @@ const RegisterModal = ({
   isLoading,
   isSubmitted,
   onRegister,
+  handleLogInClick,
 }) => {
   const { values, setValues, handleValueChange, errors, isValid, resetForm } =
     useFormAndValidation(["email", "password", "name", "avatar"]);
@@ -114,7 +115,9 @@ const RegisterModal = ({
             id="avatar"
           />
         </label>
-        <button className="modal__login">or Log in</button>
+        <button className="modal__login" onClick={handleLogInClick}>
+          or Log in
+        </button>
       </div>
     </ModalWithForm>
   );

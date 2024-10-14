@@ -13,6 +13,9 @@ function ItemModal({
   };
   const { _id } = useContext(CurrentUserContext);
   const isOwn = selectedCard.owner === _id;
+  const itemDeleteButtonClassName = `modal__delete-button ${
+    isOwn ? "modal__delete-button_visible" : "modal__delete-button_hidden"
+  }`;
   return (
     <div
       className={`modal ${activeModal === "preview-card" && "modal_opened"}`}
@@ -35,7 +38,7 @@ function ItemModal({
           </div>
           <button
             type="button"
-            className="modal__delete-button"
+            className={itemDeleteButtonClassName}
             onClick={selectOpenConfirmation}
           >
             Delete item

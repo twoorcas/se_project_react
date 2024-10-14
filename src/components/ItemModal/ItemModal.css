@@ -80,7 +80,12 @@
   text-align: left;
   cursor: pointer;
 }
-
+.modal__delete-button_visible {
+  visibility: visible;
+}
+.modal__delete-button_hidden {
+  visibility: hidden;
+}
 @media screen and (max-width: 770px) {
   .modal__content_type_image {
     max-width: 343px;

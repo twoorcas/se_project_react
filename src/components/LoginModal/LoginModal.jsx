@@ -8,6 +8,7 @@ const LoginModal = ({
   isLoading,
   isSubmitted,
   onLogin,
+  handleRegisterClick,
 }) => {
   const { values, setValues, handleValueChange, errors, isValid, resetForm } =
     useFormAndValidation(["email", "password"]);
@@ -79,7 +80,9 @@ const LoginModal = ({
             id="password"
           />
         </label>
-        <button className="modal__register">or Register</button>
+        <button className="modal__register" onClick={handleRegisterClick}>
+          or Register
+        </button>
       </div>
     </ModalWithForm>
   );

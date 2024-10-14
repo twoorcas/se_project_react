@@ -26,7 +26,6 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-
   const [activeModal, setActiveModal] = useState("login-modal");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
@@ -49,6 +48,8 @@ function App() {
         if (res.token) {
           setToken(res.token);
           setIsLoggedIn(true);
+          setIsSubmitted(true);
+          closeActiveModal();
           navigate("/users/me");
         } else throw new Error("no token");
         //else what????
@@ -62,6 +63,7 @@ function App() {
     setIsLoading(true);
     return signUp({ email, password, name, avatar })
       .then((res) => {
+        setIsSubmitted(true);
         closeActiveModal();
         onLogin({ email: res.email, password: res.password });
         //TODO anything after send signin req????
@@ -74,6 +76,10 @@ function App() {
   const handleRegisterClick = () => {
     setIsMobileMenuOpened(false);
     setActiveModal("register-modal");
+  };
+  const handleLogInClick = () => {
+    setIsMobileMenuOpened(false);
+    setActiveModal("login-modal");
   };
   const handleAddClick = () => {
     setIsMobileMenuOpened(false);
@@ -150,7 +156,7 @@ function App() {
           setIsLoggedIn(true);
           setAvatar(user.avatar);
           setUserName(user.name);
-          setCurrentUser({ user });
+          setCurrentUser(user);
           navigate("/users/me");
 
           // a previous site???
@@ -256,6 +262,7 @@ function App() {
             isLoading={isLoading}
           />
           <RegisterModal
+            handleLogInClick={handleLogInClick}
             isOpen={activeModal === "register-modal"}
             onCloseModal={closeActiveModal}
             isLoading={isLoading}
@@ -263,6 +270,7 @@ function App() {
             onRegister={onRegister}
           />
           <LoginModal
+            handleRegisterClick={handleRegisterClick}
             isOpen={activeModal === "login-modal"}
             onCloseModal={closeActiveModal}
             isLoading={isLoading}
