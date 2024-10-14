@@ -1,4 +1,7 @@
 import "./ItemModal.css";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+
 function ItemModal({
   activeModal,
   onClose,
@@ -8,6 +11,8 @@ function ItemModal({
   const selectOpenConfirmation = () => {
     openConfirmationModal(selectedCard);
   };
+  const { _id } = useContext(CurrentUserContext);
+  const isOwn = selectedCard.owner === _id;
   return (
     <div
       className={`modal ${activeModal === "preview-card" && "modal_opened"}`}

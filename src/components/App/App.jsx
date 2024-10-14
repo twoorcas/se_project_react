@@ -39,10 +39,7 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setCurrentToken] = useState("");
-  const [currentUser, setCurrentUser] = useState({
-    userName: userName,
-    avatar: avatar,
-  });
+  const [currentUser, setCurrentUser] = useState({});
   const initial = userName.split("")[0];
   const navigate = useNavigate();
   const onLogin = ({ email, password }) => {
@@ -149,10 +146,11 @@ function App() {
     if (getToken()) {
       setCurrentToken(getToken());
       getUserInfo(token)
-        .then(({ avatar, email, name }) => {
+        .then(({ user }) => {
           setIsLoggedIn(true);
-          setAvatar(avatar);
-          setUserName(name);
+          setAvatar(user.avatar);
+          setUserName(user.name);
+          setCurrentUser({ user });
           navigate("/users/me");
 
           // a previous site???
@@ -205,8 +203,6 @@ function App() {
             <Header
               handleAddClick={handleAddClick}
               weatherData={weatherData}
-              avatar={avatar}
-              userName={userName}
               initial={initial}
             />
 
