@@ -46,7 +46,9 @@ function App() {
     return signIn({ email, password })
       .then((res) => {
         if (res.token) {
+          console.log(res.token);
           setToken(res.token);
+          getUserInfo(token).then((res) => setCurrentUser(res.user));
           setIsLoggedIn(true);
           setIsSubmitted(true);
           closeActiveModal();
