@@ -37,7 +37,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setCurrentToken] = useState("");
+  const [token, setCurrentToken] = useState(getToken);
   const [currentUser, setCurrentUser] = useState({});
   const initial = userName.split("")[0];
   const navigate = useNavigate();
@@ -48,11 +48,13 @@ function App() {
         if (res.token) {
           console.log(res.token);
           setToken(res.token);
+          setCurrentToken(res.token);
           getUserInfo(token).then((res) => setCurrentUser(res.user));
           setIsLoggedIn(true);
           setIsSubmitted(true);
           closeActiveModal();
-          navigate("/users/me");
+          //navigata??
+          console.log(clothingItems);
         } else throw new Error("no token");
         //else what????
       })
@@ -145,23 +147,19 @@ function App() {
       })
       .catch(console.error);
 
-    getItems(token)
+    getItems()
       .then((data) => {
         setClothingItems(data);
       })
       .catch(console.error);
 
     if (getToken()) {
-      setCurrentToken(getToken());
       getUserInfo(token)
         .then(({ user }) => {
           setIsLoggedIn(true);
           setAvatar(user.avatar);
           setUserName(user.name);
           setCurrentUser(user);
-          navigate("/users/me");
-
-          // a previous site???
         })
         .catch(console.error);
     } else return;
