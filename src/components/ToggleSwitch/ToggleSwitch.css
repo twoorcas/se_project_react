@@ -42,15 +42,18 @@
 }
 .switch__temp-unit_F {
   left: 10px;
-  bottom: 10px;
+  /* bottom: 10px; */
 }
 .switch__temp-unit_C {
   right: 10px;
-  bottom: 10px;
+  /* bottom: 10px; */
 }
 .switch__active {
   color: rgba(255, 255, 255, 1);
 }
+/* .switch__adjusted {
+  bottom: 200px;
+} */
 @media screen and (max-width: 770px) {
   .switch {
     display: inline-block;

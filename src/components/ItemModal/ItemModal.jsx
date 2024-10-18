@@ -11,10 +11,13 @@ function ItemModal({
   const selectOpenConfirmation = () => {
     openConfirmationModal(selectedCard);
   };
-  const { _id } = useContext(CurrentUserContext);
+  const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
+  const { _id } = currentUser;
   const isOwn = selectedCard.owner === _id;
   const itemDeleteButtonClassName = `modal__delete-button ${
-    isOwn ? "modal__delete-button_visible" : "modal__delete-button_hidden"
+    activeModal === "preview-card" && isOwn
+      ? "modal__delete-button_visible"
+      : "modal__delete-button_hidden"
   }`;
   return (
     <div

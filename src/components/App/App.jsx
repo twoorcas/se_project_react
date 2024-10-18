@@ -19,6 +19,7 @@ import { getItems, addaItem, deleteItem, getUserInfo } from "../../utils/api";
 import { signIn, signUp } from "../../utils/auth";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import { setToken, getToken } from "../../utils/token";
+import ProtectedRoute from "../ProtectedRoute";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -38,28 +39,31 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setCurrentToken] = useState(getToken);
+  // const [token, setCurrentToken] = useState("");
   const [currentUser, setCurrentUser] = useState({});
   const initial = userName.split("")[0];
   const navigate = useNavigate();
+  const [logInError, setLogInError] = useState(false);
   const onLogin = ({ email, password }) => {
     setIsLoading(true);
     return signIn({ email, password })
       .then((res) => {
         if (res.token) {
-          console.log(res.token);
-          setToken(res.token);
-          setCurrentToken(res.token);
-          getUserInfo(token).then((res) => setCurrentUser(res.user));
+          setLogInError(false);
+          setToken(res.token); //localstorage
+          setCurrentToken(res.token); //token state
+          getUserInfo(res.token).then((res) => setCurrentUser(res.user));
           setIsLoggedIn(true);
           setIsSubmitted(true);
           closeActiveModal();
-          //navigata??
-          console.log(clothingItems);
-        } else throw new Error("no token");
-        //else what????
+          navigate("/");
+        }
       })
       .catch((err) => {
         console.error(err);
+        if (err === "Error: 401") {
+          setLogInError(true);
+        }
       })
       .finally(() => setIsLoading(false));
   };
@@ -156,10 +160,12 @@ function App() {
     if (getToken()) {
       getUserInfo(token)
         .then(({ user }) => {
+          // setCurrentToken(getToken);
           setIsLoggedIn(true);
           setAvatar(user.avatar);
           setUserName(user.name);
           setCurrentUser(user);
+          navigate("/");
         })
         .catch(console.error);
     } else return;
@@ -200,7 +206,9 @@ function App() {
     };
   }, [activeModal]);
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider
+      value={{ currentUser, isLoggedIn, handleRegisterClick, handleLogInClick }}
+    >
       <div className="page">
         <CurrentTempUnitContext.Provider
           value={{ currentTempUnit, handleToggleSwitchChange }}
@@ -226,16 +234,18 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <Profile
-                    avatar={avatar}
-                    userName={userName}
-                    clothingItems={clothingItems}
-                    handleCardClick={handleCardClick}
-                    handleAddClick={handleAddClick}
-                    toggleMobileMenu={toggleMobileMenu}
-                    isMobileMenuOpened={isMobileMenuOpened}
-                    initial={initial}
-                  />
+                  <ProtectedRoute>
+                    <Profile
+                      avatar={avatar}
+                      userName={userName}
+                      clothingItems={clothingItems}
+                      handleCardClick={handleCardClick}
+                      handleAddClick={handleAddClick}
+                      toggleMobileMenu={toggleMobileMenu}
+                      isMobileMenuOpened={isMobileMenuOpened}
+                      initial={initial}
+                    />
+                  </ProtectedRoute>
                 }
               />
             </Routes>
@@ -276,6 +286,7 @@ function App() {
             isLoading={isLoading}
             isSubmitted={isSubmitted}
             onLogin={onLogin}
+            logInError={logInError}
           />
         </CurrentTempUnitContext.Provider>
       </div>

@@ -1,10 +1,13 @@
 import "./ToggleSwitch.css";
 import { useState, useContext, useEffect } from "react";
 import CurrentTempUnitContext from "../../contexts/CurrentTempUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+
 function ToggleSwitch() {
   const { currentTempUnit, handleToggleSwitchChange } = useContext(
     CurrentTempUnitContext
   );
+  const { isLoggedIn } = useContext(CurrentUserContext);
   return (
     <label className="switch">
       <input
@@ -20,14 +23,14 @@ function ToggleSwitch() {
       <p
         className={`switch__temp-unit switch__temp-unit_F ${
           currentTempUnit === "F" && "switch__active"
-        }`}
+        } ${isLoggedIn === false && "switch__adjusted"}`}
       >
         F
       </p>
       <p
         className={`switch__temp-unit switch__temp-unit_C ${
           currentTempUnit === "C" && "switch__active"
-        }`}
+        } ${isLoggedIn === false && "switch__adjusted"}`}
       >
         C
       </p>

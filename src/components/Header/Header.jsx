@@ -11,8 +11,57 @@ function Header({ handleAddClick, weatherData, initial }) {
     month: "long",
     day: "numeric",
   });
-  const { avatar, name } = useContext(CurrentUserContext);
-
+  const { currentUser, isLoggedIn, handleRegisterClick, handleLogInClick } =
+    useContext(CurrentUserContext);
+  const { avatar, name } = currentUser;
+  const loggedInNav = (isLoggedIn) => {
+    if (!isLoggedIn) {
+      return (
+        <>
+          <button
+            type="button"
+            onClick={handleRegisterClick}
+            className="header__btn button"
+          >
+            Sign Up
+          </button>
+          <button
+            type="button"
+            onClick={handleLogInClick}
+            className="header__btn button"
+          >
+            Log In
+          </button>
+        </>
+      );
+    } else
+      return (
+        <>
+          <button
+            type="button"
+            onClick={handleAddClick}
+            className="header__btn button"
+          >
+            + Add clothes
+          </button>
+          <Link
+            to="/profile"
+            className="header__link_profile header__link_profile_visible"
+          >
+            <div className="header__user-container">
+              <p className=" header__username">{name}</p>
+              <p className="header__placeholder">
+                {!avatar ? (
+                  initial
+                ) : (
+                  <img src={avatar} alt={name} className="header__avatar" />
+                )}
+              </p>
+            </div>
+          </Link>
+        </>
+      );
+  };
   return (
     <header className="header">
       <div className="header__logo-date-location">
@@ -25,25 +74,7 @@ function Header({ handleAddClick, weatherData, initial }) {
       </div>
       <div className="header__icons">
         <ToggleSwitch />
-        <button
-          type="button"
-          onClick={handleAddClick}
-          className="header__add-clothes-btn button"
-        >
-          + Add clothes
-        </button>
-        <Link to="/profile" className="header__link_to-profile">
-          <div className="header__user-container">
-            <p className=" header__username">{name}</p>
-            <p className="header__placeholder">
-              {!avatar ? (
-                initial
-              ) : (
-                <img src={avatar} alt={name} className="header__avatar" />
-              )}
-            </p>
-          </div>
-        </Link>
+        {loggedInNav(isLoggedIn)}
       </div>
     </header>
   );

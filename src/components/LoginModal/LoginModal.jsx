@@ -9,6 +9,7 @@ const LoginModal = ({
   isSubmitted,
   onLogin,
   handleRegisterClick,
+  logInError,
 }) => {
   const { values, setValues, handleValueChange, errors, isValid, resetForm } =
     useFormAndValidation(["email", "password"]);
@@ -18,7 +19,6 @@ const LoginModal = ({
   }
   function handleChange(e) {
     handleValueChange(e);
-    console.log(values);
   }
 
   function handleSubmit(e) {
@@ -26,7 +26,6 @@ const LoginModal = ({
     onLogin(values);
   }
 
-  // useEffect
   useEffect(() => {
     resetForm();
     setSubmitButtonState(true);
@@ -34,6 +33,7 @@ const LoginModal = ({
   useEffect(() => {
     toggleSubmitDisabled();
   }, [values]);
+
   return (
     <ModalWithForm
       buttonText={`${isLoading ? "Saving" : "Login"}`}
@@ -48,12 +48,15 @@ const LoginModal = ({
           htmlFor="email"
           className={`modal__label ${
             !errors.email ? "" : "modal__error_visible"
-          }`}
+          } ${logInError && "modal__error_visible"}`}
         >
-          Email {errors.email || ""}
+          Email{" "}
+          {errors.email || (logInError && "lncorrect email or password") || ""}
           <input
             type="email"
-            className="modal__input"
+            className={`modal__input ${
+              !errors.email ? "" : "modal__input_error"
+            } ${logInError && "modal__input_error"}`}
             value={values.email || ""}
             onChange={handleChange}
             name="email"
@@ -66,12 +69,17 @@ const LoginModal = ({
           htmlFor="password"
           className={`modal__label ${
             !errors.password ? "" : "modal__error_visible"
-          }`}
+          } ${logInError && "modal__error_visible"}`}
         >
-          Password {errors.password || ""}
+          Password{" "}
+          {errors.password ||
+            (logInError && "lncorrect email or password") ||
+            ""}
           <input
             type="password"
-            className="modal__input"
+            className={`modal__input ${
+              !errors.password ? "" : "modal__input_error"
+            } ${logInError && "modal__input_error"}`}
             value={values.password || ""}
             onChange={handleChange}
             name="password"

@@ -4,7 +4,8 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 import ItemCard from "../ItemCard/ItemCard";
 function ClothesSection({ handleCardClick, clothingItems, handleAddClick }) {
-  const { _id } = useContext(CurrentUserContext);
+  const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
+  const { _id } = currentUser;
   const userAddedClothingItems = clothingItems.filter(
     (item) => item.owner === _id
   );

@@ -27,7 +27,7 @@
   display: flex;
   gap: 20px;
 }
-.header__add-clothes-btn {
+.header__btn {
   margin: 0;
   margin-left: auto;
   border: 0;
@@ -40,10 +40,11 @@
   background-color: rgba(243, 243, 243, 1);
   cursor: pointer;
 }
-.header__link_to-profile {
+.header__link_profile {
   text-decoration: none;
   color: black;
 }
+
 .header__user-container {
   display: flex;
   align-items: center;
@@ -108,7 +109,7 @@
     font-size: 16px;
   }
 
-  .header__add-clothes-btn {
+  .header__btn {
     display: none;
   }
 }

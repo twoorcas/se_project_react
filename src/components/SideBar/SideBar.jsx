@@ -4,6 +4,8 @@ function SideBar({ avatar, userName, initial }) {
     <>
       {" "}
       <div className="side-bar__content_user">
+        {/* <img src={avatar} alt={userName} className="side-bar__avatar" /> */}
+
         <p className="side-bar__placeholder">
           {!avatar ? (
             initial

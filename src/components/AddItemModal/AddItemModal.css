@@ -25,6 +25,10 @@
   padding: 0;
   padding-top: 8px;
 }
+.modal__input_error {
+  border-bottom: 1px solid #ff0000;
+  color: #ff0000;
+}
 .modal__error {
   display: block;
   margin: 0;
@@ -38,22 +42,6 @@
   position: absolute;
   left: 50px;
 }
-/* .modal__input_type_error {
-  border-bottom: 1px #ff0000 solid;
-  margin: 0 0 2px 0;
-} */
-/* .modal__error_visible {
-  display: block;
-  margin: 0;
-  padding: 0;
-  color: #ff0000;
-  margin-bottom: 14px;
-  font-family: Cabinet Grotesk;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 1;
-} */
 .modal__radio-fieldset {
   border-style: none;
   margin: 0;
