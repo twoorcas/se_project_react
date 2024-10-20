@@ -66,7 +66,6 @@ const AddItemModal = ({
           <input
             type="text"
             className="modal__input"
-            value={values.nameValue || ""}
             onChange={handleChange}
             name="nameValue"
             placeholder="Name"
@@ -86,7 +85,6 @@ const AddItemModal = ({
           <input
             type="url"
             className="modal__input"
-            value={values.urlValue || ""}
             onChange={handleChange}
             name="urlValue"
             placeholder="image URL"

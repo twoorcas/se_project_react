@@ -53,4 +53,27 @@ const getUserInfo = (token) => {
   }).then((res) => getResult(res));
 };
 
-export { getItems, getResult, addaItem, deleteItem, getUserInfo, baseUrl };
+const updateProfile = ({ name, avatar }, token) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name: name,
+      avatar: avatar,
+    }),
+  }).then((res) => getResult(res));
+};
+
+export {
+  getItems,
+  getResult,
+  addaItem,
+  deleteItem,
+  getUserInfo,
+  updateProfile,
+  baseUrl,
+};

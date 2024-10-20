@@ -1,12 +1,14 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ProtectedRoute from "../ProtectedRoute";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import Footer from "../Footer/Footer";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinate, apiKey } from "../../utils/constant";
@@ -15,11 +17,16 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { Routes, Route } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import defaultAvatar from "../../assets/avatar.png";
-import { getItems, addaItem, deleteItem, getUserInfo } from "../../utils/api";
+import {
+  getItems,
+  addaItem,
+  deleteItem,
+  getUserInfo,
+  updateProfile,
+} from "../../utils/api";
 import { signIn, signUp } from "../../utils/auth";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 import { setToken, getToken } from "../../utils/token";
-import ProtectedRoute from "../ProtectedRoute";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -27,7 +34,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("login-modal");
+  const [activeModal, setActiveModal] = useState("edit-profile-modal");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
@@ -39,11 +46,21 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setCurrentToken] = useState(getToken);
-  // const [token, setCurrentToken] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
-  const initial = userName.split("")[0];
-  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState({ name: "", avatar: "" });
   const [logInError, setLogInError] = useState(false);
+  const initial = currentUser.name.split("")[0];
+  const navigate = useNavigate();
+  const onSaveChanges = ({ name, avatar }) => {
+    setIsLoading(true);
+    return updateProfile({ name, avatar }, token)
+      .then((user) => {
+        getUserInfo(token).then((res) => setCurrentUser(res.user));
+        setIsSubmitted(true);
+        closeActiveModal();
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
   const onLogin = ({ email, password }) => {
     setIsLoading(true);
     return signIn({ email, password })
@@ -81,6 +98,16 @@ function App() {
   };
 
   //to open register form
+  const handleLogOutClick = () => {
+    closeActiveModal();
+    setToken("");
+    setCurrentUser({ name: "", avatar: "" });
+    setIsLoggedIn(false);
+  };
+  const handleEditProfileClick = () => {
+    setIsMobileMenuOpened(false);
+    setActiveModal("edit-profile-modal");
+  };
   const handleRegisterClick = () => {
     setIsMobileMenuOpened(false);
     setActiveModal("register-modal");
@@ -162,8 +189,8 @@ function App() {
         .then(({ user }) => {
           // setCurrentToken(getToken);
           setIsLoggedIn(true);
-          setAvatar(user.avatar);
-          setUserName(user.name);
+          // setAvatar(user.avatar);
+          // setUserName(user.name);
           setCurrentUser(user);
           navigate("/");
         })
@@ -207,7 +234,14 @@ function App() {
   }, [activeModal]);
   return (
     <CurrentUserContext.Provider
-      value={{ currentUser, isLoggedIn, handleRegisterClick, handleLogInClick }}
+      value={{
+        currentUser,
+        isLoggedIn,
+        handleRegisterClick,
+        handleLogInClick,
+        handleEditProfileClick,
+        handleLogOutClick,
+      }}
     >
       <div className="page">
         <CurrentTempUnitContext.Provider
@@ -236,8 +270,6 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Profile
-                      avatar={avatar}
-                      userName={userName}
                       clothingItems={clothingItems}
                       handleCardClick={handleCardClick}
                       handleAddClick={handleAddClick}
@@ -287,6 +319,14 @@ function App() {
             isSubmitted={isSubmitted}
             onLogin={onLogin}
             logInError={logInError}
+          />
+          <EditProfileModal
+            handleEditProfileClick={handleEditProfileClick}
+            isOpen={activeModal === "edit-profile-modal"}
+            onCloseModal={closeActiveModal}
+            isLoading={isLoading}
+            isSubmitted={isSubmitted}
+            onSaveChanges={onSaveChanges}
           />
         </CurrentTempUnitContext.Provider>
       </div>

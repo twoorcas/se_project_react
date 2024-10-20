@@ -6,24 +6,12 @@
   flex-direction: row;
   position: relative;
 }
-.profile__button {
-  display: none;
-}
-/* .profile__user-clothes {
-  display: flex;
-  align-items: start;
-  padding-top: 19px;
-  flex-wrap: wrap;
-  flex-direction: row;
-  position: relative;
-  width: 100%;
-} */
+
 .profile__side-bar {
   display: flex;
-  gap: 6px;
-  align-items: center;
+  flex-direction: column;
+  gap: 24px;
   padding-right: 50px;
-  /* position: fixed; */
 }
 .profile__add-button {
   margin: 0;
@@ -50,11 +38,9 @@
     position: relative;
     width: 100%;
     gap: 20px;
-    z-index: 1;
+    /* display: none; */
   }
-  .profile__clothes-section {
-    z-index: 1;
-  }
+
   .profile__button {
     display: block;
     position: absolute;

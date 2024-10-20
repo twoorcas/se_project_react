@@ -1,18 +1,18 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState, useEffect } from "react";
-import "./LoginModal.css";
+import { useState, useEffect, useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import "./EditProfileModal.css";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
-const LoginModal = ({
+const EditProfileModal = ({
   isOpen,
   onCloseModal,
   isLoading,
   isSubmitted,
-  onLogin,
-  handleRegisterClick,
-  logInError,
+  onSaveChanges,
 }) => {
+  const { currentUser } = useContext(CurrentUserContext);
   const { values, setValues, handleValueChange, errors, isValid, resetForm } =
-    useFormAndValidation(["email", "password"]);
+    useFormAndValidation(["name", "avatar"]);
   const [submitButtonState, setSubmitButtonState] = useState(true);
   function toggleSubmitDisabled() {
     isValid ? setSubmitButtonState(false) : setSubmitButtonState(true);
@@ -23,7 +23,7 @@ const LoginModal = ({
 
   function handleSubmit(e) {
     e.preventDefault();
-    onLogin(values);
+    onSaveChanges(values);
   }
 
   useEffect(() => {
@@ -36,61 +36,58 @@ const LoginModal = ({
 
   return (
     <ModalWithForm
-      buttonText={`${isLoading ? "Saving" : "Login"}`}
-      titleText="Log In"
+      buttonText={`${isLoading ? "Saving" : "Save Changes"}`}
+      titleText="Edit Profile"
       onClose={onCloseModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
       submitButtonState={submitButtonState}
     >
-      <div className="form__login">
+      <div className="form__edit-profile">
         <label
-          htmlFor="email"
+          htmlFor="name"
           className={`modal__label ${
-            !errors.email ? "" : "modal__error_visible"
-          } ${logInError && "modal__error_visible"}`}
+            !errors.name ? "" : "modal__error_visible"
+          } `}
         >
-          Email{" "}
-          {errors.email || (logInError && "lncorrect email or password") || ""}
+          Name {errors.name}
           <input
-            type="email"
+            type="text"
             className={`modal__input ${
               !errors.email ? "" : "modal__input_error"
-            } ${logInError && "modal__input_error"}`}
+            } `}
+            defaultValue={currentUser.name}
             onChange={handleChange}
-            name="email"
-            placeholder="Email"
+            name="name"
+            placeholder="name"
             required
-            id="email"
+            id="name"
+            minLength={2}
+            maxLength={30}
           />
         </label>
         <label
-          htmlFor="password"
+          htmlFor="avatar"
           className={`modal__label ${
-            !errors.password ? "" : "modal__error_visible"
-          } ${logInError && "modal__error_visible"}`}
+            !errors.avatar ? "" : "modal__error_visible"
+          } `}
         >
-          Password{" "}
-          {errors.password ||
-            (logInError && "lncorrect email or password") ||
-            ""}
+          Avatar {errors.avatar}
           <input
-            type="password"
+            type="url"
             className={`modal__input ${
-              !errors.password ? "" : "modal__input_error"
-            } ${logInError && "modal__input_error"}`}
+              !errors.avatar ? "" : "modal__input_error"
+            } `}
+            defaultValue={currentUser.avatar}
             onChange={handleChange}
-            name="password"
-            placeholder="Password"
+            name="avatar"
+            placeholder="avatar"
             required
-            id="password"
+            id="avatar"
           />
         </label>
-        <button className="modal__register" onClick={handleRegisterClick}>
-          or Register
-        </button>
       </div>
     </ModalWithForm>
   );
 };
-export default LoginModal;
+export default EditProfileModal;

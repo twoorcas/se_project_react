@@ -1,11 +1,10 @@
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 import SideBar from "../SideBar/SideBar";
 import ClothesSection from "../ClothesSection/ClothesSection";
-import avatar from "../../assets/avatar.png";
 import MobileMenu from "../MobileMenu/MobileMenu";
 function Profile({
-  avatar,
-  userName,
   handleCardClick,
   clothingItems,
   handleAddClick,
@@ -13,6 +12,8 @@ function Profile({
   isMobileMenuOpened,
   initial,
 }) {
+  const { currentUser } = useContext(CurrentUserContext);
+  const { name, avatar } = currentUser;
   return (
     <div className="profile">
       <MobileMenu
@@ -20,13 +21,13 @@ function Profile({
         handleAddClick={handleAddClick}
         toggleMobileMenu={toggleMobileMenu}
         isMobileMenuOpened={isMobileMenuOpened}
-        userName={userName}
+        name={name}
         initial={initial}
       />
 
       <section className="profile__side-bar">
-        <SideBar avatar={avatar} userName={userName} initial={initial} />
-        <button className="profile__button" onClick={toggleMobileMenu}></button>
+        <SideBar avatar={avatar} name={name} initial={initial} />
+        {/* <button className="profile__button" onClick={toggleMobileMenu}></button> */}
       </section>
 
       <section className="profile__clothes-section">
