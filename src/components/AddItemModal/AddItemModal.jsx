@@ -77,6 +77,7 @@ const AddItemModal = ({
             maxLength={30}
             required
             id="nameValue"
+            value={values.nameValue}
           />
         </label>
         <label
@@ -94,6 +95,7 @@ const AddItemModal = ({
             placeholder="image URL"
             required
             id="imgURL"
+            value={values.urlValue}
           />
         </label>
         <fieldset className="modal__radio-fieldset">

@@ -24,16 +24,12 @@ const LoginModal = ({
   function handleSubmit(e) {
     e.preventDefault();
     onLogin(values);
-    if (isSubmitted) {
-      resetForm();
-      setSubmitButtonState(true);
-    }
   }
 
-  //   useEffect(() => {
-  //     resetForm();
-  //     setSubmitButtonState(true);
-  //   }, [isSubmitted, resetForm]);
+  useEffect(() => {
+    resetForm();
+    setSubmitButtonState(true);
+  }, [isSubmitted, resetForm]);
   useEffect(() => {
     toggleSubmitDisabled();
   }, [isValid]);
@@ -62,6 +58,7 @@ const LoginModal = ({
               !errors.email ? "" : "modal__input_error"
             } ${logInError && "modal__input_error"}`}
             onChange={handleChange}
+            value={values.email}
             name="email"
             placeholder="Email"
             required
@@ -88,9 +85,14 @@ const LoginModal = ({
             placeholder="Password"
             required
             id="password"
+            value={values.password}
           />
         </label>
-        <button className="modal__register" onClick={handleRegisterClick}>
+        <button
+          className="modal__register"
+          onClick={handleRegisterClick}
+          type="button"
+        >
           or Register
         </button>
       </div>

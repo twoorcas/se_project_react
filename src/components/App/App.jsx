@@ -56,9 +56,11 @@ function App() {
     return updateProfile({ name, avatar }, token)
       .then((user) => {
         getUserInfo(token).then((res) => setCurrentUser(res.user));
+
         setIsSubmitted(true);
         closeActiveModal();
       })
+
       .catch(console.error)
       .finally(() => setIsLoading(false));
   };
@@ -72,16 +74,13 @@ function App() {
           setCurrentToken(res.token); //token state
           getUserInfo(res.token).then((res) => setCurrentUser(res.user));
           setIsLoggedIn(true);
+          console.log(isLoggedIn);
           setIsSubmitted(true);
           closeActiveModal();
-          navigate("/profile");
+          // navigate("/profile");
         }
       })
-      .then((res) => {
-        console.log(isLoggedIn);
-        console.log(isS);
-        console.log(isSubmitted);
-      })
+      .then((res) => console.log(isLoggedIn))
       .catch((err) => {
         console.error(err);
         if (err === "Error: 401") {
@@ -98,7 +97,8 @@ function App() {
       .then((res) => {
         setIsSubmitted(true);
         closeActiveModal();
-        onLogin({ email: res.email, password: res.password });
+        // The signup response only includes the user's email
+        onLogin({ email: res.email, password: password });
         //TODO anything after send signin req????
       })
       .catch(console.error)

@@ -62,6 +62,7 @@ const RegisterModal = ({
             placeholder="Email"
             required
             id="register-email"
+            value={values.email}
           />
         </label>
         <label
@@ -79,6 +80,7 @@ const RegisterModal = ({
             placeholder="Password"
             required
             id="register-password"
+            value={values.password}
           />
         </label>
         <label
@@ -96,6 +98,7 @@ const RegisterModal = ({
             placeholder="Name"
             required
             id="register-name"
+            value={values.name}
           />
         </label>
         <label
@@ -113,9 +116,14 @@ const RegisterModal = ({
             placeholder="Avatar URL"
             required
             id="register-avatar"
+            value={values.avatar}
           />
         </label>
-        <button className="modal__login" onClick={handleLogInClick}>
+        <button
+          className="modal__login"
+          onClick={handleLogInClick}
+          type="button"
+        >
           or Log in
         </button>
       </div>
