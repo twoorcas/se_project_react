@@ -34,7 +34,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("edit-profile-modal");
+  const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);

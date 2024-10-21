@@ -24,12 +24,16 @@ const LoginModal = ({
   function handleSubmit(e) {
     e.preventDefault();
     onLogin(values);
+    if (isSubmitted) {
+      resetForm();
+      setSubmitButtonState(true);
+    }
   }
 
-  useEffect(() => {
-    resetForm();
-    setSubmitButtonState(true);
-  }, [isSubmitted, resetForm]);
+  //   useEffect(() => {
+  //     resetForm();
+  //     setSubmitButtonState(true);
+  //   }, [isSubmitted, resetForm]);
   useEffect(() => {
     toggleSubmitDisabled();
   }, [isValid]);

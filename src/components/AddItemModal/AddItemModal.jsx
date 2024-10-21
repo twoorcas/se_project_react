@@ -31,6 +31,10 @@ const AddItemModal = ({
   function handleSubmit(e) {
     e.preventDefault();
     onAddItem(values);
+    if (isSubmitted) {
+      resetForm();
+      setSubmitButtonState(true);
+    }
   }
   const checkRadioButton = (value) => {
     if (values.type === value) {
@@ -39,10 +43,10 @@ const AddItemModal = ({
   };
   const [radioErrorActive, setRadioErrorActive] = useState(false);
   // useEffect
-  useEffect(() => {
-    resetForm();
-    setSubmitButtonState(true);
-  }, [isSubmitted, resetForm]);
+  // useEffect(() => {
+  //   resetForm();
+  //   setSubmitButtonState(true);
+  // }, [isSubmitted, resetForm]);
   useEffect(() => {
     toggleSubmitDisabled();
   }, [values]);

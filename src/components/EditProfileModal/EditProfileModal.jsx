@@ -24,12 +24,16 @@ const EditProfileModal = ({
   function handleSubmit(e) {
     e.preventDefault();
     onSaveChanges(values);
+    if (isSubmitted) {
+      resetForm();
+      setSubmitButtonState(true);
+    }
   }
 
-  useEffect(() => {
-    resetForm();
-    setSubmitButtonState(true);
-  }, [isSubmitted, resetForm]);
+  // useEffect(() => {
+  //   resetForm();
+  //   setSubmitButtonState(true);
+  // }, [isSubmitted, resetForm]);
   useEffect(() => {
     toggleSubmitDisabled();
   }, [isValid]);

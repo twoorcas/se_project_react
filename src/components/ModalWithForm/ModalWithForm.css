@@ -9,9 +9,11 @@
   justify-content: center;
   align-items: center;
   visibility: hidden;
+  /* display: none; */
 }
 .modal_opened {
   visibility: visible;
+  /* display: flex; */
 }
 .modal__content {
   position: relative;
