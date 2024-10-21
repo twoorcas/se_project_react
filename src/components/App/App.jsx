@@ -45,6 +45,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isS, setS] = useState("original");
   const [token, setCurrentToken] = useState(getToken);
   const [currentUser, setCurrentUser] = useState({ name: "", avatar: "" });
   const [logInError, setLogInError] = useState(false);
@@ -73,8 +74,13 @@ function App() {
           setIsLoggedIn(true);
           setIsSubmitted(true);
           closeActiveModal();
-          navigate("/");
+          navigate("/profile");
         }
+      })
+      .then((res) => {
+        console.log(isLoggedIn);
+        console.log(isS);
+        console.log(isSubmitted);
       })
       .catch((err) => {
         console.error(err);
@@ -82,7 +88,9 @@ function App() {
           setLogInError(true);
         }
       })
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   const onRegister = ({ email, password, name, avatar }) => {
     setIsLoading(true);
@@ -187,10 +195,7 @@ function App() {
     if (getToken()) {
       getUserInfo(token)
         .then(({ user }) => {
-          // setCurrentToken(getToken);
           setIsLoggedIn(true);
-          // setAvatar(user.avatar);
-          // setUserName(user.name);
           setCurrentUser(user);
           navigate("/");
         })
