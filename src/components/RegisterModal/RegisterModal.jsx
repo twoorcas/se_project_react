@@ -23,17 +23,13 @@ const RegisterModal = ({
   function handleSubmit(e) {
     e.preventDefault();
     onRegister(values);
-    if (isSubmitted) {
-      resetForm();
-      setSubmitButtonState(true);
-    }
   }
-
-  // useEffect
-  //   useEffect(() => {
-  //     resetForm();
-  //     setSubmitButtonState(true);
-  //   }, [isSubmitted, resetForm]);
+  useEffect(() => {
+    if (!isSubmitted) {
+      resetForm();
+      //   setSubmitButtonState(false);
+    }
+  }, [isSubmitted]);
   useEffect(() => {
     toggleSubmitDisabled();
   }, [isValid]);

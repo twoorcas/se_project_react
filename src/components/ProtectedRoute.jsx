@@ -12,7 +12,7 @@ export default function ProtectedRoute({ children }) {
   // property we default to "/".
   // const location = useLocation();
   // const from = location.state?.from || "/";
-  const { isLoggedIn } = useContext(CurrentUserContext);
+  const { isLoggedIn, isLoggedInLoading } = useContext(CurrentUserContext);
   // If the user is logged in we redirect them away from our
   // anonymous routes.
   // if ( isLoggedIn) {
@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children }) {
 
   // If a user is not logged in and tries to access a route that
   // requires authorization, we redirect them to the /login route.
-  if (!isLoggedIn) {
+  if (!isLoggedIn && !isLoggedInLoading) {
     // While redirecting to /login we set the location objects
     // state.from property to store the current location value.
     // This allows us to redirect them appropriately after they

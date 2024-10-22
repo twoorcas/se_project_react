@@ -34,7 +34,7 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState("preview-card");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
@@ -45,7 +45,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isS, setS] = useState("original");
+  const [isLoggedInLoading, setIsLoggedInLoading] = useState(true);
   const [token, setCurrentToken] = useState(getToken);
   const [currentUser, setCurrentUser] = useState({ name: "", avatar: "" });
   const [logInError, setLogInError] = useState(false);
@@ -56,7 +56,6 @@ function App() {
     return updateProfile({ name, avatar }, token)
       .then((user) => {
         getUserInfo(token).then((res) => setCurrentUser(res.user));
-
         setIsSubmitted(true);
         closeActiveModal();
       })
@@ -74,13 +73,10 @@ function App() {
           setCurrentToken(res.token); //token state
           getUserInfo(res.token).then((res) => setCurrentUser(res.user));
           setIsLoggedIn(true);
-          console.log(isLoggedIn);
           setIsSubmitted(true);
           closeActiveModal();
-          // navigate("/profile");
         }
       })
-      .then((res) => console.log(isLoggedIn))
       .catch((err) => {
         console.error(err);
         if (err === "Error: 401") {
@@ -107,6 +103,7 @@ function App() {
 
   //to open register form
   const handleLogOutClick = () => {
+    setIsSubmitted(false);
     closeActiveModal();
     setToken("");
     setCurrentUser({ name: "", avatar: "" });
@@ -117,14 +114,17 @@ function App() {
     setActiveModal("edit-profile-modal");
   };
   const handleRegisterClick = () => {
+    setIsSubmitted(false);
     setIsMobileMenuOpened(false);
     setActiveModal("register-modal");
   };
   const handleLogInClick = () => {
+    setIsSubmitted(false);
     setIsMobileMenuOpened(false);
     setActiveModal("login-modal");
   };
   const handleAddClick = () => {
+    setIsSubmitted(false);
     setIsMobileMenuOpened(false);
     setActiveModal("add-item-modal");
   };
@@ -197,11 +197,11 @@ function App() {
         .then(({ user }) => {
           setIsLoggedIn(true);
           setCurrentUser(user);
-          navigate("/");
+          setIsLoggedInLoading(false);
         })
-        .catch(console.error);
-    } else return;
-    //else what?????
+        .catch(console.error)
+        .finally(() => setIsLoggedInLoading(false));
+    } else setIsLoggedInLoading(false);
   }, []);
 
   useEffect(() => {
@@ -242,6 +242,7 @@ function App() {
       value={{
         currentUser,
         isLoggedIn,
+        isLoggedInLoading,
         handleRegisterClick,
         handleLogInClick,
         handleEditProfileClick,
