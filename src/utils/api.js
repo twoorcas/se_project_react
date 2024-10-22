@@ -67,7 +67,26 @@ const updateProfile = ({ name, avatar }, token) => {
     }),
   }).then((res) => getResult(res));
 };
-
+const likeItem = (id, token) => {
+  return fetch(`${baseUrl}/${id}/likes`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => getResult(res));
+};
+const dislikeItem = (id, token) => {
+  return fetch(`${baseUrl}/${id}/likes`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => getResult(res));
+};
 export {
   getItems,
   getResult,
@@ -75,5 +94,7 @@ export {
   deleteItem,
   getUserInfo,
   updateProfile,
+  likeItem,
+  dislikeItem,
   baseUrl,
 };

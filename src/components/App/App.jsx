@@ -23,6 +23,8 @@ import {
   deleteItem,
   getUserInfo,
   updateProfile,
+  likeItem,
+  dislikeItem,
 } from "../../utils/api";
 import { signIn, signUp } from "../../utils/auth";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
@@ -51,6 +53,28 @@ function App() {
   const [logInError, setLogInError] = useState(false);
   const initial = currentUser.name.split("")[0];
   const navigate = useNavigate();
+  const handleCardLike = ({ id, isLiked }) => {
+    // Check if this card is not currently liked
+    !isLiked
+      ? // if so, send a request to add the user's id to the card's likes array
+        likeItem(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.log(err))
+      : // if not, send a request to remove the user's id from the card's likes array
+
+        // the first argument is the card's id
+        dislikeItem(id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === id ? updatedCard : item))
+            );
+          })
+          .catch((err) => console.log(err));
+  };
   const onSaveChanges = ({ name, avatar }) => {
     setIsLoading(true);
     return updateProfile({ name, avatar }, token)
