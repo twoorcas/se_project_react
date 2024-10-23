@@ -36,14 +36,12 @@ function App() {
     temp: { F: 999, C: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("preview-card");
+  const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
   const [toDeleteItem, setToDeleteItem] = useState({});
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
-  const [avatar, setAvatar] = useState(defaultAvatar);
-  const [userName, setUserName] = useState("Terrence Tegegne");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,28 +51,6 @@ function App() {
   const [logInError, setLogInError] = useState(false);
   const initial = currentUser.name.split("")[0];
   const navigate = useNavigate();
-  const handleCardLike = ({ id, isLiked }) => {
-    // Check if this card is not currently liked
-    !isLiked
-      ? // if so, send a request to add the user's id to the card's likes array
-        likeItem(id, token)
-          .then((updatedCard) => {
-            setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
-            );
-          })
-          .catch((err) => console.log(err))
-      : // if not, send a request to remove the user's id from the card's likes array
-
-        // the first argument is the card's id
-        dislikeItem(id, token)
-          .then((updatedCard) => {
-            setClothingItems((cards) =>
-              cards.map((item) => (item._id === id ? updatedCard : item))
-            );
-          })
-          .catch((err) => console.log(err));
-  };
   const onSaveChanges = ({ name, avatar }) => {
     setIsLoading(true);
     return updateProfile({ name, avatar }, token)
@@ -119,13 +95,10 @@ function App() {
         closeActiveModal();
         // The signup response only includes the user's email
         onLogin({ email: res.email, password: password });
-        //TODO anything after send signin req????
       })
       .catch(console.error)
       .finally(() => setIsLoading(false));
   };
-
-  //to open register form
   const handleLogOutClick = () => {
     setIsSubmitted(false);
     closeActiveModal();
@@ -161,6 +134,26 @@ function App() {
     setSelectedCard(card);
     setActiveModal("preview-card");
   };
+  function handleCardLike(item) {
+    // const _id = item._id;
+    // !isLiked
+    //   ? likeItem(_id, token)
+    //       .then((updatedCard) => {
+    //         setClothingItems((cards) =>
+    //           cards.map((item) => (item._id === _id ? updatedCard : item))
+    //         );
+    //       })
+    //       .catch((err) => console.log(err))
+    //   : dislikeItem(_id, token)
+    //       .then((updatedCard) => {
+    //         setClothingItems((cards) =>
+    //           cards.map((item) => (item._id === _id ? updatedCard : item))
+    //         );
+    //       })
+    //       .catch((err) => console.log(err));
+    console.log(item);
+  }
+
   const handleToggleSwitchChange = () => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
   };
@@ -292,6 +285,7 @@ function App() {
                     weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
+                    handleCardLike={handleCardLike}
                   />
                 }
               />

@@ -42,7 +42,6 @@ function deleteItem({ _id }, token) {
 }
 
 const getUserInfo = (token) => {
-  // Send a GET request to /users/me
   return fetch(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
