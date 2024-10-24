@@ -11,6 +11,7 @@ function Profile({
   toggleMobileMenu,
   isMobileMenuOpened,
   initial,
+  handleCardLike,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
   const { name, avatar } = currentUser;
@@ -35,6 +36,7 @@ function Profile({
           handleCardClick={handleCardClick}
           clothingItems={clothingItems}
           handleAddClick={handleAddClick}
+          handleCardLike={handleCardLike}
         />
       </section>
     </div>

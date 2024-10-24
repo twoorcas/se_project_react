@@ -134,24 +134,26 @@ function App() {
     setSelectedCard(card);
     setActiveModal("preview-card");
   };
-  function handleCardLike(item) {
-    // const _id = item._id;
-    // !isLiked
-    //   ? likeItem(_id, token)
-    //       .then((updatedCard) => {
-    //         setClothingItems((cards) =>
-    //           cards.map((item) => (item._id === _id ? updatedCard : item))
-    //         );
-    //       })
-    //       .catch((err) => console.log(err))
-    //   : dislikeItem(_id, token)
-    //       .then((updatedCard) => {
-    //         setClothingItems((cards) =>
-    //           cards.map((item) => (item._id === _id ? updatedCard : item))
-    //         );
-    //       })
-    //       .catch((err) => console.log(err));
-    console.log(item);
+  function handleCardLike({ item, isLiked }) {
+    !isLiked
+      ? likeItem(item._id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((card) =>
+                card._id === updatedCard._id ? updatedCard : card
+              )
+            );
+          })
+          .catch((err) => console.log(err))
+      : dislikeItem(item._id, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((card) =>
+                card._id === updatedCard._id ? updatedCard : card
+              )
+            );
+          })
+          .catch((err) => console.log(err));
   }
 
   const handleToggleSwitchChange = () => {
@@ -160,6 +162,7 @@ function App() {
   const handleCardDelete = () => {
     setIsLoading(true);
     deleteItem(toDeleteItem, token)
+      //res.send({deleted}) in backend
       .then((res) => {
         closeActiveModal();
         setClothingItems(
@@ -300,6 +303,7 @@ function App() {
                       toggleMobileMenu={toggleMobileMenu}
                       isMobileMenuOpened={isMobileMenuOpened}
                       initial={initial}
+                      handleCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }

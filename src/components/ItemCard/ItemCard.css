@@ -52,6 +52,9 @@
   margin-left: 8px;
   flex-shrink: 0;
 }
+.card__like-button_hidden {
+  display: none;
+}
 .card__like-button_active {
   background-image: url(../../assets/LikeActive.svg);
 }

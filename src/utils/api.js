@@ -67,7 +67,7 @@ const updateProfile = ({ name, avatar }, token) => {
   }).then((res) => getResult(res));
 };
 const likeItem = (id, token) => {
-  return fetch(`${baseUrl}/${id}/likes`, {
+  return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
@@ -77,7 +77,7 @@ const likeItem = (id, token) => {
   }).then((res) => getResult(res));
 };
 const dislikeItem = (id, token) => {
-  return fetch(`${baseUrl}/${id}/likes`, {
+  return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",
     headers: {
       Accept: "application/json",

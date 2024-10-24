@@ -3,7 +3,12 @@ import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 import ItemCard from "../ItemCard/ItemCard";
-function ClothesSection({ handleCardClick, clothingItems, handleAddClick }) {
+function ClothesSection({
+  handleCardClick,
+  clothingItems,
+  handleAddClick,
+  handleCardLike,
+}) {
   const { currentUser, isLoggedIn } = useContext(CurrentUserContext);
   const { _id } = currentUser;
   const userAddedClothingItems = clothingItems.filter(
@@ -25,6 +30,7 @@ function ClothesSection({ handleCardClick, clothingItems, handleAddClick }) {
               item={item}
               onCardClick={handleCardClick}
               weather={item.weather}
+              onCardLike={handleCardLike}
             />
           );
         })}
