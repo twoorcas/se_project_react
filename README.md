@@ -6,5 +6,6 @@ The project makes a call to an API, which then responds with the daily weather f
 
 ## Links
 
-- [Frontend Repo](https://twoorcas.github.io/se_project_react)
+- [GitHub Page](https://twoorcas.github.io/se_project_react)
 - [Backend Repo](https://github.com/twoorcas/express)
+- [Front Repo](https://github.com/twoorcas/se_project_react)
