@@ -50,16 +50,32 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: "", avatar: "" });
   const [logInError, setLogInError] = useState(false);
   const initial = currentUser.name.split("")[0];
-  const navigate = useNavigate();
-  const onSaveChanges = ({ name, avatar }) => {
+  function handleSubmit(request) {
+    setIsLoading(true);
+    request()
+      .then(closeActiveModal)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }
+  const onAddItem = ({ nameValue, urlValue, type }) => {
+    const makeRequest = () => {
+      return addaItem({ nameValue, urlValue, type }, token).then((data) => {
+        setClothingItems([...clothingItems, data]);
+        closeActiveModal();
+        setIsSubmitted(true);
+      });
+    };
+    handleSubmit(makeRequest);
+  };
+  //fix next handle function on friday
+  const onProfileChange = ({ name, avatar }) => {
     setIsLoading(true);
     return updateProfile({ name, avatar }, token)
-      .then((user) => {
-        getUserInfo(token).then((res) => setCurrentUser(res.user));
+      .then((res) => {
+        setCurrentUser(res.user);
         setIsSubmitted(true);
         closeActiveModal();
       })
-
       .catch(console.error)
       .finally(() => setIsLoading(false));
   };
@@ -71,7 +87,7 @@ function App() {
           setLogInError(false);
           setToken(res.token); //localstorage
           setCurrentToken(res.token); //token state
-          getUserInfo(res.token).then((res) => setCurrentUser(res.user));
+          setCurrentUser(res.user);
           setIsLoggedIn(true);
           setIsSubmitted(true);
           closeActiveModal();
@@ -153,9 +169,8 @@ function App() {
               )
             );
           })
-          .catch((err) => console.log(err));
+          .catch(console.error);
   }
-
   const handleToggleSwitchChange = () => {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
   };
@@ -178,19 +193,6 @@ function App() {
     setIsMobileMenuOpened(false);
     setToDeleteItem(card);
     setActiveModal("delete-confirmation");
-  };
-  const onAddItem = ({ nameValue, urlValue, type }) => {
-    setIsLoading(true);
-    addaItem({ nameValue, urlValue, type }, token)
-      .then((data) => {
-        setClothingItems([...clothingItems, data]);
-        closeActiveModal();
-        setIsSubmitted(true);
-      })
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
   };
   const toggleMobileMenu = () => {
     if (isMobileMenuOpened) {
@@ -354,7 +356,7 @@ function App() {
             onCloseModal={closeActiveModal}
             isLoading={isLoading}
             isSubmitted={isSubmitted}
-            onSaveChanges={onSaveChanges}
+            onProfileChange={onProfileChange}
           />
         </CurrentTempUnitContext.Provider>
       </div>

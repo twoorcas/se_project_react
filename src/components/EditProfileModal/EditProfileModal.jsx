@@ -8,7 +8,7 @@ const EditProfileModal = ({
   onCloseModal,
   isLoading,
   isSubmitted,
-  onSaveChanges,
+  onProfileChange,
 }) => {
   const { currentUser } = useContext(CurrentUserContext);
   const { values, setValues, handleValueChange, errors, isValid, resetForm } =
@@ -20,12 +20,16 @@ const EditProfileModal = ({
   function handleChange(e) {
     handleValueChange(e);
   }
-
   function handleSubmit(e) {
     e.preventDefault();
-    onSaveChanges(values);
+    if (!values.name) {
+      return onProfileChange({ name: currentUser.name, avatar: values.avatar });
+    }
+    if (!values.avatar) {
+      return onProfileChange({ avatar: currentUser.avatar, name: values.name });
+    }
+    return onProfileChange(values);
   }
-
   useEffect(() => {
     if (!isSubmitted) {
       resetForm();

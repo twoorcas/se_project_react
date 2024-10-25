@@ -40,7 +40,6 @@ function deleteItem({ _id }, token) {
     },
   }).then((res) => getResult(res));
 }
-
 const getUserInfo = (token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "GET",
@@ -51,7 +50,6 @@ const getUserInfo = (token) => {
     },
   }).then((res) => getResult(res));
 };
-
 const updateProfile = ({ name, avatar }, token) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
