@@ -53,7 +53,10 @@ function App() {
   function handleSubmit(request) {
     setIsLoading(true);
     request()
-      .then(closeActiveModal)
+      .then(() => {
+        closeActiveModal();
+        setIsSubmitted(true);
+      })
       .catch(console.error)
       .finally(() => setIsLoading(false));
   }
@@ -61,59 +64,48 @@ function App() {
     const makeRequest = () => {
       return addaItem({ nameValue, urlValue, type }, token).then((data) => {
         setClothingItems([...clothingItems, data]);
-        closeActiveModal();
-        setIsSubmitted(true);
       });
     };
     handleSubmit(makeRequest);
   };
   //fix next handle function on friday
   const onProfileChange = ({ name, avatar }) => {
-    setIsLoading(true);
-    return updateProfile({ name, avatar }, token)
-      .then((res) => {
+    const makeRequest = () => {
+      return updateProfile({ name, avatar }, token).then((res) => {
         setCurrentUser(res.user);
-        setIsSubmitted(true);
-        closeActiveModal();
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+      });
+    };
+    handleSubmit(makeRequest);
   };
   const onLogin = ({ email, password }) => {
-    setIsLoading(true);
-    return signIn({ email, password })
-      .then((res) => {
-        if (res.token) {
-          setLogInError(false);
-          setToken(res.token); //localstorage
-          setCurrentToken(res.token); //token state
-          setCurrentUser(res.user);
-          setIsLoggedIn(true);
-          setIsSubmitted(true);
-          closeActiveModal();
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        if (err === "Error: 401") {
-          setLogInError(true);
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const makeRequest = () => {
+      return signIn({ email, password })
+        .then((res) => {
+          if (res.token) {
+            setLogInError(false);
+            setToken(res.token); //localstorage
+            setCurrentToken(res.token); //token state
+            setCurrentUser(res.user);
+            setIsLoggedIn(true);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          if (err === "Error: 401") {
+            setLogInError(true);
+          }
+        });
+    };
+    handleSubmit(makeRequest);
   };
   const onRegister = ({ email, password, name, avatar }) => {
-    setIsLoading(true);
-    return signUp({ email, password, name, avatar })
-      .then((res) => {
-        setIsSubmitted(true);
-        closeActiveModal();
+    const makeRequest = () => {
+      return signUp({ email, password, name, avatar }).then((res) => {
         // The signup response only includes the user's email
         onLogin({ email: res.email, password: password });
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+      });
+    };
+    handleSubmit(makeRequest);
   };
   const handleLogOutClick = () => {
     setIsSubmitted(false);
@@ -175,18 +167,18 @@ function App() {
     currentTempUnit === "F" ? setCurrentTempUnit("C") : setCurrentTempUnit("F");
   };
   const handleCardDelete = () => {
-    setIsLoading(true);
-    deleteItem(toDeleteItem, token)
-      //res.send({deleted}) in backend
-      .then((res) => {
-        closeActiveModal();
-        setClothingItems(
-          clothingItems.filter((item) => item._id !== toDeleteItem._id)
-        );
-        setToDeleteItem({});
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+    const makeRequest = () => {
+      deleteItem(toDeleteItem, token)
+        //res.send({deleted}) in backend
+        .then((res) => {
+          closeActiveModal();
+          setClothingItems(
+            clothingItems.filter((item) => item._id !== toDeleteItem._id)
+          );
+          setToDeleteItem({});
+        });
+    };
+    handleSubmit(makeRequest);
   };
 
   const openConfirmationModal = (card) => {
@@ -321,14 +313,14 @@ function App() {
             isSubmitted={isSubmitted}
           />
           <ItemModal
-            activeModal={activeModal}
+            isOpen={activeModal === "preview-card"}
             onClose={closeActiveModal}
             selectedCard={selectedCard}
             openConfirmationModal={openConfirmationModal}
             isLoading={isLoading}
           />
           <DeleteConfirmationModal
-            activeModal={activeModal}
+            isOpen={activeModal === "delete-confirmation"}
             onClose={closeActiveModal}
             handleCardDelete={handleCardDelete}
             isLoading={isLoading}

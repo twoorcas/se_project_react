@@ -1,0 +1,53 @@
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  /* display: none; */
+}
+.modal_opened {
+  visibility: visible;
+  /* display: flex; */
+}
+.modal__content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 28px 28px 36px 28px;
+  background-color: white;
+  border-style: none;
+  border-radius: 10px;
+  max-width: 496px;
+  width: 100%;
+}
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  background-image: url(../../assets/Union.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 16px;
+  height: 16px;
+  border-style: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+@media screen and (max-width: 770px) {
+  .modal {
+    align-items: end;
+  }
+  .modal__content {
+    max-width: 343px;
+    padding: 32px 16px;
+  }
+}
