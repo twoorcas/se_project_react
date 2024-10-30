@@ -219,7 +219,6 @@ function App() {
         .finally(() => setIsLoggedInLoading(false));
     } else setIsLoggedInLoading(false);
   }, []);
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 770) {
@@ -238,21 +237,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  useEffect(() => {
-    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
-    const handleEscClose = (e) => {
-      // define the function inside useEffect =not lose the reference on rerendering
-      if (e.key === "Escape") {
-        closeActiveModal();
-      }
-    };
-    document.addEventListener("keydown", handleEscClose);
-    return () => {
-      //  clean up function for removing the listener when unmount
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, [activeModal]);
   return (
     <CurrentUserContext.Provider
       value={{

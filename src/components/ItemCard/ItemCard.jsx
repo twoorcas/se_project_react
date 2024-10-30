@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./ItemCard.css";
@@ -22,7 +22,9 @@ function ItemCard({ item, onCardClick, onCardLike }) {
     }
     return "card__like-button_active button card__like-button";
   };
-
+  useEffect(() => {
+    setIsLiked(item.likes.includes(currentUser._id));
+  }, [currentUser]);
   return (
     <li className="cards__card card">
       <div className="card__header">
