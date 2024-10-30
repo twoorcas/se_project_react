@@ -168,15 +168,17 @@ function App() {
   };
   const handleCardDelete = () => {
     const makeRequest = () => {
-      deleteItem(toDeleteItem, token)
-        //res.send({deleted}) in backend
-        .then((res) => {
-          closeActiveModal();
-          setClothingItems(
-            clothingItems.filter((item) => item._id !== toDeleteItem._id)
-          );
-          setToDeleteItem({});
-        });
+      return (
+        deleteItem(toDeleteItem, token)
+          //res.send({deleted}) in backend
+          .then((res) => {
+            closeActiveModal();
+            setClothingItems(
+              clothingItems.filter((item) => item._id !== toDeleteItem._id)
+            );
+            setToDeleteItem({});
+          })
+      );
     };
     handleSubmit(makeRequest);
   };

@@ -1,7 +1,7 @@
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState, useEffect } from "react";
 import "./LoginModal.css";
-import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation.js";
 const LoginModal = ({
   isOpen,
   onCloseModal,

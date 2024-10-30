@@ -4,6 +4,7 @@
   border: 1px rgba(0, 0, 0, 0.3) solid;
   overflow: hidden;
   cursor: pointer;
+  height: 326px;
 }
 .card__header {
   position: absolute;

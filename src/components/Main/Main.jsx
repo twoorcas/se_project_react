@@ -17,17 +17,20 @@ function Main({ weatherData, handleCardClick, clothingItems, handleCardLike }) {
           Today is {temperature} &deg; {currentTempUnit} / You may want to wear:
         </p>
         <ul className="cards__list">
-          {clothingItems.toReversed().map((item) => {
-            return (
-              <ItemCard
-                key={item._id}
-                item={item}
-                onCardClick={handleCardClick}
-                weather={item.weather}
-                onCardLike={handleCardLike}
-              />
-            );
-          })}
+          {clothingItems
+            .filter((item) => item.weather === weatherData.type)
+            .toReversed()
+            .map((item) => {
+              return (
+                <ItemCard
+                  key={item._id}
+                  item={item}
+                  onCardClick={handleCardClick}
+                  weather={item.weather}
+                  onCardLike={handleCardLike}
+                />
+              );
+            })}
         </ul>
       </section>
     </main>
