@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://twoorcas.github.io/se_project_react/",
+  "homepage": "https://wtwrbyjulie.twilightparadox.com",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && scp -r ./dist/* juliechenmedicine@wtwrbyjulie.twilightparadox.com:/home/juliechenmedicine/frontend",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
